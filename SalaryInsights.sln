@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights", "src\SalaryInsights\SalaryInsights.csproj", "{E8EF7424-64C3-4F3E-8B3D-474414D0C153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.EntityFrameworkCore", "src\SalaryInsights.EntityFrameworkCore\SalaryInsights.EntityFrameworkCore.csproj", "{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Shared", "src\SalaryInsights.Shared\SalaryInsights.Shared.csproj", "{D4D5F0BF-810F-4CF5-808A-B6556EF5BF03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4D5F0BF-810F-4CF5-808A-B6556EF5BF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4D5F0BF-810F-4CF5-808A-B6556EF5BF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4D5F0BF-810F-4CF5-808A-B6556EF5BF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4D5F0BF-810F-4CF5-808A-B6556EF5BF03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E8EF7424-64C3-4F3E-8B3D-474414D0C153} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
+		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
+		{D4D5F0BF-810F-4CF5-808A-B6556EF5BF03} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
+	EndGlobalSection
+EndGlobal

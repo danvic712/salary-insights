@@ -10,7 +10,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using SalaryInsights.Applications.Contracts;
-using SalaryInsights.ViewModels;
+using SalaryInsights.Dtos;
 
 namespace SalaryInsights.Controllers;
 
@@ -20,13 +20,13 @@ public class PayrollsController : ControllerBase
 {
     #region Initializes
 
-    private readonly IPayrollsAppService _appService;
+    private readonly IPayrollAppService _appService;
 
     /// <summary>
-    /// C'tor
+    /// Ctor
     /// </summary>
     /// <param name="appService"></param>
-    public PayrollsController(IPayrollsAppService appService)
+    public PayrollsController(IPayrollAppService appService)
     {
         _appService = appService;
     }
@@ -41,7 +41,7 @@ public class PayrollsController : ControllerBase
     /// <param name="month"></param>
     /// <returns></returns>
     [HttpGet("{month}")]
-    public async Task<PayrollDetailsVM> GetByMonth([FromRoute] DateTime month)
+    public async Task<PayrollDetailsDto> GetByMonth([FromRoute] DateTime month)
     {
         return await _appService.GetByMonthAsync(month);
     }

@@ -1,24 +1,36 @@
 // -----------------------------------------------------------------------
-// <copyright file= "SalaryItemType.cs">
+// <copyright file= "SelectOptionDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2023-12-9 20:48
+// Created DateTime: 2023-12-10 11:26
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.EntityFrameworkCore.Models;
+using SalaryInsights.Shared.Enums;
 
-public class SalaryItemType
+namespace SalaryInsights.Dtos;
+
+public class ParameterDto
 {
     /// <summary>
-    /// 主键
+    /// Primary key
     /// </summary>
     public Guid Id { get; set; }
+
+    /// <summary>
+    /// Type
+    /// </summary>
+    public ParameterTypes ParameterType { get; set; }
     
     /// <summary>
-    /// 类型名称
+    /// Parameter
     /// </summary>
     public string Name { get; set; }
+    
+    /// <summary>
+    /// Description
+    /// </summary>
+    public string Description { get; set; }
 }

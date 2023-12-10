@@ -1,18 +1,16 @@
 // -----------------------------------------------------------------------
-// <copyright file= "IPayrollsAppService.cs">
+// <copyright file= "PayrollDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2023-12-9 22:23
+// Created DateTime: 2023-12-9 20:27
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
-using SalaryInsights.ViewModels;
+namespace SalaryInsights.Dtos;
 
-namespace SalaryInsights.Applications.Contracts;
-
-public interface IPayrollsAppService
+public class PayrollDto
 {
-    Task<PayrollDetailsVM> GetByMonthAsync(DateTime month);
+    
 }

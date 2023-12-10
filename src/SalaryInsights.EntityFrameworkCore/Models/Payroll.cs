@@ -23,7 +23,7 @@ public class Payroll
     public Guid Id { get; set; }
     
     /// <summary>
-    /// 
+    /// Associated company id
     /// </summary>
     public Guid CompanyId { get; set; }
 
@@ -43,12 +43,12 @@ public class Payroll
     public decimal NetSalary { get; set; }
 
     // 备注
-    public string Remarks { get; set; }
+    public string? Remark { get; set; }
     
     /// <summary>
     /// 
     /// </summary>
-    public virtual Company Company { get; set; }
+    public virtual Parameter Company { get; set; }
     
     /// <summary>
     /// 

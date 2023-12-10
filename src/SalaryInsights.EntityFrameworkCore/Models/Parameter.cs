@@ -1,24 +1,36 @@
 // -----------------------------------------------------------------------
-// <copyright file= "Company.cs">
+// <copyright file= "Parameter.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2023-12-9 20:42
+// Created DateTime: 2023-12-10 16:19
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
+using SalaryInsights.Shared.Enums;
+
 namespace SalaryInsights.EntityFrameworkCore.Models;
 
-public class Company
+public class Parameter
 {
     /// <summary>
-    /// 主键
+    /// Primary key
     /// </summary>
     public Guid Id { get; set; }
     
     /// <summary>
-    /// 公司名称
+    /// Type
     /// </summary>
-    public string CompanyName { get; set; }
+    public ParameterTypes ParameterType { get; set; }
+    
+    /// <summary>
+    /// Parameter
+    /// </summary>
+    public string Name { get; set; }
+    
+    /// <summary>
+    /// Description
+    /// </summary>
+    public string? Description { get; set; }
 }

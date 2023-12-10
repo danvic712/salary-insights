@@ -9,32 +9,25 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SalaryInsights.EntityFrameworkCore.Models;
 
 namespace SalaryInsights.EntityFrameworkCore;
 
-public class AppDbContext : DbContext
+public class SalaryInsightsDbContext : DbContext
 {
-    private readonly IConfiguration _configuration;
-
-    public AppDbContext(
-        DbContextOptions<AppDbContext> options,
-        IConfiguration configuration) : base(options)
+    public SalaryInsightsDbContext(
+        DbContextOptions<SalaryInsightsDbContext> options) : base(options)
     {
-        _configuration = configuration;
     }
 
-    public DbSet<Company> Companies { get; set; }
+    public DbSet<Parameter> Parameters { get; set; }
 
     public DbSet<Payroll> Payrolls { get; set; }
 
     public DbSet<SalaryItem> SalaryItems { get; set; }
 
-    public DbSet<SalaryItemType> SalaryItemTypes { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        optionsBuilder.UseSqlite(_configuration.GetConnectionString("SalaryInsights"));
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 }

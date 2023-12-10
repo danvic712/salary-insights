@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file= "PayrollDetailsVM.cs">
+// <copyright file= "PayrollDetailsDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
@@ -8,9 +8,9 @@
 // Description:
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.ViewModels;
+namespace SalaryInsights.Dtos;
 
-public class PayrollDetailsVM
+public class PayrollDetailsDto
 {
     
 }

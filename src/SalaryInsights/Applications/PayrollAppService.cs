@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file= "PayrollsAppService.cs">
+// <copyright file= "PayrollAppService.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
@@ -10,21 +10,22 @@
 
 using Microsoft.EntityFrameworkCore;
 using SalaryInsights.Applications.Contracts;
-using SalaryInsights.ViewModels;
+using SalaryInsights.Dtos;
+using SalaryInsights.EntityFrameworkCore;
 
 namespace SalaryInsights.Applications;
 
-public class PayrollsAppService : IPayrollsAppService
+public class PayrollAppService : IPayrollAppService
 {
     #region Initializes
 
-    private readonly DbContext _dbContext;
+    private readonly SalaryInsightsDbContext _dbContext;
 
     /// <summary>
-    /// C'tor
+    /// Ctor
     /// </summary>
     /// <param name="dbContext"></param>
-    public PayrollsAppService(DbContext dbContext)
+    public PayrollAppService(SalaryInsightsDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -33,7 +34,7 @@ public class PayrollsAppService : IPayrollsAppService
 
     #region Services
 
-    public async Task<PayrollDetailsVM> GetByMonthAsync(DateTime month)
+    public async Task<PayrollDetailsDto> GetByMonthAsync(DateTime month)
     {
         throw new NotImplementedException();
     }

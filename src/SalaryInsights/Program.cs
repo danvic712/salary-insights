@@ -46,6 +46,8 @@ public class Program
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
@@ -53,6 +55,8 @@ public class Program
             Log.Information("Starting SalaryInsights");
 
             app.MapControllers();
+            
+            app.MapFallbackToFile("index.html");
 
             await app.RunAsync();
         }

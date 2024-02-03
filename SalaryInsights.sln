@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Shared", "src\SalaryInsights.Shared\SalaryInsights.Shared.csproj", "{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{33E933E3-B2ED-47AC-88ED-59CFE8E4D913}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Tests", "tests\SalaryInsights.Tests\SalaryInsights.Tests.csproj", "{A1F645A4-1573-4117-BB9F-A31D716723C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,10 +30,15 @@ Global
 		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E8EF7424-64C3-4F3E-8B3D-474414D0C153} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
 		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
 		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
+		{A1F645A4-1573-4117-BB9F-A31D716723C3} = {33E933E3-B2ED-47AC-88ED-59CFE8E4D913}
 	EndGlobalSection
 EndGlobal

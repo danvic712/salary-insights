@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file= "OperationResponse.cs">
+// <copyright file= "OperationResponseDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
@@ -8,9 +8,9 @@
 // Description: Standard resource operation return object
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.Shared.Responses;
+namespace SalaryInsights.Shared.Dtos;
 
-public class OperationResponse<TPrimaryKey, TResource> : ResponseBase<TResource>
+public class OperationResponseDto<TPrimaryKey, TResource> : ResponseBaseDto<TResource>
     where TResource : class
 {
     #region Properties
@@ -29,9 +29,9 @@ public class OperationResponse<TPrimaryKey, TResource> : ResponseBase<TResource>
 
     #region Methods
 
-    public static OperationResponse<TPrimaryKey, TResource> Success(TPrimaryKey id, TResource resource)
+    public static OperationResponseDto<TPrimaryKey, TResource> Success(TPrimaryKey id, TResource resource)
     {
-        return new OperationResponse<TPrimaryKey, TResource>()
+        return new OperationResponseDto<TPrimaryKey, TResource>()
         {
             Status = true,
             Id = id,
@@ -39,12 +39,12 @@ public class OperationResponse<TPrimaryKey, TResource> : ResponseBase<TResource>
         };
     }
 
-    public static OperationResponse<TPrimaryKey, TResource> Failure(
+    public static OperationResponseDto<TPrimaryKey, TResource> Failure(
         string message = "You have encountered an unexpected error. Please contact the support for assistance.",
         Dictionary<string, IList<string>> errors = null,
         TPrimaryKey? id = default)
     {
-        return new OperationResponse<TPrimaryKey, TResource>()
+        return new OperationResponseDto<TPrimaryKey, TResource>()
         {
             Status = false,
             Message = message,

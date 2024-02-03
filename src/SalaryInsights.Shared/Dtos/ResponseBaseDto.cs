@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file= "ResponseBase.cs">
+// <copyright file= "ResponseBaseDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
@@ -8,9 +8,9 @@
 // Description: Standard API response object
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.Shared.Responses;
+namespace SalaryInsights.Shared.Dtos;
 
-public class ResponseBase<T> where T : class
+public class ResponseBaseDto<T> where T : class
 {
     #region Properties
 

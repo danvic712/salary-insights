@@ -1,16 +1,16 @@
 // -----------------------------------------------------------------------
-// <copyright file= "SalaryItem.cs">
+// <copyright file= "SalaryItemDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2023-12-9 20:45
+// Created DateTime: 2024-2-3 18:35
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.EntityFrameworkCore.Models;
+namespace SalaryInsights.Dtos;
 
-public class SalaryItem
+public class SalaryItemDto
 {
     /// <summary>
     /// Primary Key
@@ -20,12 +20,12 @@ public class SalaryItem
     /// <summary>
     /// 
     /// </summary>
-    public Guid PayrollId { get; set; }
-
+    public Guid SalaryItemTypeId { get; set; }
+    
     /// <summary>
     /// 
     /// </summary>
-    public Guid SalaryItemTypeId { get; set; }
+    public string SalaryItemType { get; set; }
 
     /// <summary>
     /// 
@@ -33,7 +33,7 @@ public class SalaryItem
     public decimal Amount { get; set; }
 
     /// <summary>
-    /// 
+    /// Remark
     /// </summary>
     public string? Remark { get; set; }
     

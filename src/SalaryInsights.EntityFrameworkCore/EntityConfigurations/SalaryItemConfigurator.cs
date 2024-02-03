@@ -42,9 +42,5 @@ public class SalaryItemConfigurator : IEntityTypeConfiguration<SalaryItem>
         builder.Property(i => i.Remark)
             .IsRequired(false)
             .HasColumnName("remark");
-        
-        builder.HasOne(i => i.SalaryItemType)
-            .WithMany()
-            .HasForeignKey(si => si.SalaryItemTypeId); 
     }
 }

@@ -9,8 +9,8 @@
 // -----------------------------------------------------------------------
 
 using SalaryInsights.Dtos;
+using SalaryInsights.Shared.Dtos;
 using SalaryInsights.Shared.Enums;
-using SalaryInsights.Shared.Responses;
 
 namespace SalaryInsights.Applications.Contracts;
 
@@ -20,5 +20,5 @@ public interface IParameterAppService
 
     Task<ParameterDto> GetByIdAsync(Guid id);
 
-    Task<OperationResponse<Guid, ParameterDto>> CreateAsync(ParameterCreationDto creationDto);
+    Task<OperationResponseDto<Guid, ParameterDto>> CreateAsync(ParameterCreationDto creationDto);
 }

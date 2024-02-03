@@ -9,10 +9,16 @@
 // -----------------------------------------------------------------------
 
 using SalaryInsights.Dtos;
+using SalaryInsights.Shared.Dtos;
 
 namespace SalaryInsights.Applications.Contracts;
 
 public interface IPayrollAppService
 {
-    Task<PayrollDetailsDto> GetByMonthAsync(DateTime month);
+    Task<PaginationResource<PayrollDto>> QueryAsync(PayrollQueryDto queryDto);
+    Task<PayrollDetailsDto?> GetByIdAsync(Guid id);
+    Task<IList<SalaryItemDto>> GetSalaryItemsAsync(Guid id);
+    Task<OperationResponseDto<Guid, PayrollDetailsDto>> CreateAsync(PayrollCreationDto creationDto);
+    Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync(PayrollCreationDto creationDto);
+    Task<OperationResponseDto<Guid, PayrollDetailsDto>> DeleteAsync(Guid id);
 }

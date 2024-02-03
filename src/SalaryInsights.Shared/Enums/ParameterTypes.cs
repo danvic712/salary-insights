@@ -16,5 +16,7 @@ public enum ParameterTypes : short
 {
     [Display(Name = "Company")] Company = 1,
 
-    [Display(Name = "SalaryItemType")] SalaryItemType
+    [Display(Name = "Salary Item Type")] SalaryItemType,
+    
+    [Display(Name = "Currency")]Currency
 }

@@ -48,14 +48,5 @@ public class PayrollConfigurator : IEntityTypeConfiguration<Payroll>
         builder.Property(i => i.Remark)
             .IsRequired(false)
             .HasColumnName("remark");
-
-        builder.HasOne(i => i.Company)
-            .WithMany()
-            .HasForeignKey(i => i.CompanyId);
-
-        builder.HasMany(i => i.SalaryItems)
-            .WithOne(i => i.Payroll)
-            .HasForeignKey(i => i.PayrollId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -15,8 +15,8 @@ using SalaryInsights.Applications.Contracts;
 using SalaryInsights.Dtos;
 using SalaryInsights.EntityFrameworkCore;
 using SalaryInsights.EntityFrameworkCore.Models;
+using SalaryInsights.Shared.Dtos;
 using SalaryInsights.Shared.Enums;
-using SalaryInsights.Shared.Responses;
 
 namespace SalaryInsights.Applications;
 
@@ -64,7 +64,7 @@ public class ParameterAppService : IParameterAppService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<OperationResponse<Guid, ParameterDto>> CreateAsync(ParameterCreationDto creationDto)
+    public async Task<OperationResponseDto<Guid, ParameterDto>> CreateAsync(ParameterCreationDto creationDto)
     {
         try
         {
@@ -79,7 +79,7 @@ public class ParameterAppService : IParameterAppService
                 await _dbContext.SaveChangesAsync();
             }
 
-            return OperationResponse<Guid, ParameterDto>.Success(parameter.Id,
+            return OperationResponseDto<Guid, ParameterDto>.Success(parameter.Id,
                 _mapper.Map<ParameterDto>(parameter));
         }
         catch (Exception ex)
@@ -88,7 +88,7 @@ public class ParameterAppService : IParameterAppService
                 "An error occurred while creating a new parameter, parameterType:{ParameterType}, name:{Name}",
                 creationDto.ParameterType, creationDto.Name);
 
-            return OperationResponse<Guid, ParameterDto>.Failure("Failed to create a new parameter.");
+            return OperationResponseDto<Guid, ParameterDto>.Failure("Failed to create a new parameter.");
         }
     }
 

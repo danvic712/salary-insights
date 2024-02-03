@@ -11,8 +11,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SalaryInsights.Applications.Contracts;
 using SalaryInsights.Dtos;
+using SalaryInsights.Shared.Dtos;
 using SalaryInsights.Shared.Enums;
-using SalaryInsights.Shared.Responses;
 
 namespace SalaryInsights.Controllers;
 
@@ -68,7 +68,7 @@ public class ParametersController : ControllerBase
     /// <param name="creationDto">Parameter creation dto</param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<OperationResponse<Guid, ParameterDto>> CreateAsync([FromBody] ParameterCreationDto creationDto)
+    public async Task<OperationResponseDto<Guid, ParameterDto>> CreateAsync([FromBody] ParameterCreationDto creationDto)
     {
         return await _appService.CreateAsync(creationDto);
     }

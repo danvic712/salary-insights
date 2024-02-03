@@ -1,44 +1,39 @@
 // -----------------------------------------------------------------------
-// <copyright file= "SalaryItem.cs">
+// <copyright file= "PayrollQueryDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2023-12-9 20:45
+// Created DateTime: 2024-1-20 19:55
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.EntityFrameworkCore.Models;
+namespace SalaryInsights.Dtos;
 
-public class SalaryItem
+public class PayrollQueryDto
 {
     /// <summary>
-    /// Primary Key
-    /// </summary>
-    public Guid Id { get; set; }
-
-    /// <summary>
     /// 
     /// </summary>
-    public Guid PayrollId { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Guid SalaryItemTypeId { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public decimal Amount { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string? Remark { get; set; }
+    public DateTime? StartTime { get; set; }
     
     /// <summary>
     /// 
     /// </summary>
-    public bool Positive { get; set; }
+    public  DateTime? EndTime { get; set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public string? CompanyName { get; set; }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public int Page { get; set; } = 1;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public int PageSize { get; set; } = 15;
 }

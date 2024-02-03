@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file= "PaginationResponse.cs">
+// <copyright file= "PaginationResponseDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
@@ -8,9 +8,9 @@
 // Description: Standard API pagination response object
 // -----------------------------------------------------------------------
 
-namespace SalaryInsights.Shared.Responses;
+namespace SalaryInsights.Shared.Dtos;
 
-public class PaginationResponse<T> : ResponseBase<PaginationResource<T>>
+public class PaginationResponseDto<T> : ResponseBaseDto<PaginationResource<T>>
 {
 }
 
@@ -21,17 +21,7 @@ public class PaginationResource<T>
     /// <summary>
     /// Total data
     /// </summary>
-    public int Total { get; set; }
-
-    /// <summary>
-    /// Current page
-    /// </summary>
-    public int Current { get; set; }
-
-    /// <summary>
-    /// Next page
-    /// </summary>
-    public int Next { get; set; }
+    public int TotalCount { get; set; }
 
     /// <summary>
     /// Paging data

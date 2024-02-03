@@ -12,13 +12,8 @@ namespace SalaryInsights.EntityFrameworkCore.Models;
 
 public class Payroll
 {
-    public Payroll()
-    {
-        SalaryItems = new HashSet<SalaryItem>();
-    }
-    
     /// <summary>
-    /// 主键
+    /// Primary Key
     /// </summary>
     public Guid Id { get; set; }
     
@@ -28,7 +23,7 @@ public class Payroll
     public Guid CompanyId { get; set; }
 
     /// <summary>
-    /// 月份
+    /// Month
     /// </summary>
     public DateTime Month { get; set; }
     
@@ -42,16 +37,8 @@ public class Payroll
     /// </summary>
     public decimal NetSalary { get; set; }
 
-    // 备注
+    /// <summary>
+    /// Remark
+    /// </summary>
     public string? Remark { get; set; }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    public virtual Parameter Company { get; set; }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    public virtual ICollection<SalaryItem> SalaryItems { get; set; }
 }

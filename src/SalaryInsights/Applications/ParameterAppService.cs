@@ -15,8 +15,10 @@ using SalaryInsights.Applications.Contracts;
 using SalaryInsights.Dtos;
 using SalaryInsights.EntityFrameworkCore;
 using SalaryInsights.EntityFrameworkCore.Models;
+using SalaryInsights.Shared;
 using SalaryInsights.Shared.Dtos;
 using SalaryInsights.Shared.Enums;
+using SalaryInsights.Shared.Exceptions;
 
 namespace SalaryInsights.Applications;
 
@@ -28,7 +30,16 @@ public class ParameterAppService : IParameterAppService
     private readonly IMapper _mapper;
     private readonly SalaryInsightsDbContext _dbContext;
 
-    public ParameterAppService(ILogger<ParameterAppService> logger, IMapper mapper, SalaryInsightsDbContext dbContext)
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="logger">Logger instance</param>
+    /// <param name="mapper">AutoMapper instance</param>
+    /// <param name="dbContext">DBContext instance</param>
+    public ParameterAppService(
+        ILogger<ParameterAppService> logger,
+        IMapper mapper,
+        SalaryInsightsDbContext dbContext)
     {
         _logger = logger;
         _mapper = mapper;
@@ -38,6 +49,13 @@ public class ParameterAppService : IParameterAppService
     #endregion
 
     #region Services
+
+    public IList<SelectOptionDto> GetTypes()
+    {
+        return Utils.GetEnumOptions<ParameterTypes>()
+            .OrderBy(i => i.Text)
+            .ToList();
+    }
 
     public async Task<IList<ParameterDto>> GetAsync(ParameterTypes parameterType, string name)
     {
@@ -89,6 +107,49 @@ public class ParameterAppService : IParameterAppService
                 creationDto.ParameterType, creationDto.Name);
 
             return OperationResponseDto<Guid, ParameterDto>.Failure("Failed to create a new parameter.");
+        }
+    }
+
+    public async Task<OperationResponseDto<Guid, ParameterDto>> UpdateAsync(ParameterEditDto editDto)
+    {
+        try
+        {
+            var parameter = await _dbContext.Parameters
+                .FirstOrDefaultAsync(i => i.Id == editDto.Id);
+            if (parameter is null)
+                throw new EntityNotFoundException();
+
+            _mapper.Map(editDto, parameter);
+
+            return OperationResponseDto<Guid, ParameterDto>.Success(parameter.Id,
+                _mapper.Map<ParameterDto>(parameter));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while updating a parameter, id:{ParameterId}", editDto.Id);
+            return OperationResponseDto<Guid, ParameterDto>.Failure("Failed to update a parameter.");
+        }
+    }
+
+    public async Task<OperationResponseDto<Guid, ParameterDto>> DeleteAsync(Guid id)
+    {
+        try
+        {
+            var parameter = await _dbContext.Parameters
+                .FirstOrDefaultAsync(i => i.Id == id);
+            if (parameter is null)
+                throw new EntityNotFoundException();
+
+            _dbContext.Parameters.Remove(parameter);
+
+            await _dbContext.SaveChangesAsync();
+
+            return OperationResponseDto<Guid, ParameterDto>.Success(id, null);
+        }
+        catch (Exception ex) when (ex is not SIException)
+        {
+            _logger.LogError(ex, "An error occurred while deleting a parameter, id:{ParameterId}", id);
+            return OperationResponseDto<Guid, ParameterDto>.Failure("Failed to delete a parameter.");
         }
     }
 

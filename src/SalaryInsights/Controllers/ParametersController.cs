@@ -41,10 +41,20 @@ public class ParametersController : ControllerBase
     #region APIs
 
     /// <summary>
+    /// Returns the list of parameter types
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("types")]
+    public IList<SelectOptionDto> GetTypes()
+    {
+        return _appService.GetTypes();
+    }
+
+    /// <summary>
     /// Return the list of parameters based on the provided type
     /// </summary>
-    /// <param name="parameterType">Parameter Type</param>
-    /// <param name="name">Parameter Name</param>
+    /// <param name="parameterType">Parameter type</param>
+    /// <param name="name">Parameter name</param>
     /// <returns></returns>
     [HttpGet("types/{parameterType}")]
     public async Task<IList<ParameterDto>> GetAsync([FromRoute] ParameterTypes parameterType, [FromQuery] string? name)
@@ -55,6 +65,7 @@ public class ParametersController : ControllerBase
     /// <summary>
     /// Return the parameter details based on the provided id
     /// </summary>
+    /// <param name="id">Parameter id</param>
     /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<ParameterDto> GetByIdAsync([FromRoute] Guid id)
@@ -71,6 +82,28 @@ public class ParametersController : ControllerBase
     public async Task<OperationResponseDto<Guid, ParameterDto>> CreateAsync([FromBody] ParameterCreationDto creationDto)
     {
         return await _appService.CreateAsync(creationDto);
+    }
+    
+    /// <summary>
+    /// Update the existing parameter
+    /// </summary>
+    /// <param name="editDto">Parameter edit dto</param>
+    /// <returns></returns>
+    [HttpPut]
+    public async Task<OperationResponseDto<Guid, ParameterDto>> UpdateAsync([FromBody] ParameterEditDto editDto)
+    {
+        return await _appService.UpdateAsync(editDto);
+    }
+    
+    /// <summary>
+    /// Delete the existing parameter
+    /// </summary>
+    /// <param name="id">Parameter id</param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    public async Task<OperationResponseDto<Guid, ParameterDto>> DeleteAsync([FromRoute] Guid id)
+    {
+        return await _appService.DeleteAsync(id);
     }
 
     #endregion

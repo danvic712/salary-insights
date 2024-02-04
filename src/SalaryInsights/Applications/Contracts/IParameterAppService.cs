@@ -16,9 +16,15 @@ namespace SalaryInsights.Applications.Contracts;
 
 public interface IParameterAppService
 {
+    IList<SelectOptionDto> GetTypes();
+    
     Task<IList<ParameterDto>> GetAsync(ParameterTypes parameterType, string name);
 
     Task<ParameterDto> GetByIdAsync(Guid id);
 
     Task<OperationResponseDto<Guid, ParameterDto>> CreateAsync(ParameterCreationDto creationDto);
+    
+    Task<OperationResponseDto<Guid, ParameterDto>> UpdateAsync(ParameterEditDto editDto);
+    
+    Task<OperationResponseDto<Guid, ParameterDto>> DeleteAsync(Guid id);
 }

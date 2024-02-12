@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using SalaryInsights.Applications.Contracts;
 using SalaryInsights.Dtos;
 using SalaryInsights.EntityFrameworkCore;
+using SalaryInsights.EntityFrameworkCore.Models;
 using SalaryInsights.Shared.Dtos;
 using SalaryInsights.Shared.Enums;
 using SalaryInsights.Shared.Exceptions;
@@ -76,7 +77,6 @@ public class PayrollAppService : IPayrollAppService
         };
     }
 
-
     public async Task<PayrollDetailsDto?> GetByIdAsync(Guid id)
     {
         var payroll = await GetPayrolls().ProjectTo<PayrollDetailsDto>(_mapper.ConfigurationProvider)
@@ -96,12 +96,56 @@ public class PayrollAppService : IPayrollAppService
 
     public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> CreateAsync(PayrollCreationDto creationDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var companyParameter = await _dbContext.Parameters
+                .FirstOrDefaultAsync(i => i.ParameterType == ParameterTypes.Company && i.Id == creationDto.CompanyId);
+            if (companyParameter is null)
+                throw new EntityNotFoundException("Company", creationDto.CompanyId);
+
+            var payroll = _mapper.Map<Payroll>(creationDto);
+
+            await _dbContext.Payrolls.AddAsync(payroll);
+
+            await SalaryItemHandlerAsync(payroll.Id, creationDto.SalaryItems);
+
+            await _dbContext.SaveChangesAsync();
+
+            return OperationResponseDto<Guid, PayrollDetailsDto>.Success(payroll.Id,
+                await GetByIdAsync(payroll.Id));
+        }
+        catch (Exception ex) when (ex is not SIException)
+        {
+            _logger.LogError(ex, "An error occurred while creating the payroll");
+            return OperationResponseDto<Guid, PayrollDetailsDto>.Failure("Failed to create the payroll.");
+        }
     }
 
-    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync(PayrollCreationDto creationDto)
+    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync(PayrollEditDto editDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var payroll = await _dbContext.Payrolls.FirstOrDefaultAsync(i => i.Id == editDto.Id);
+            if (payroll is null)
+                throw new EntityNotFoundException("Payroll", editDto.Id);
+
+            var salaryItems = await _dbContext.SalaryItems.Where(i => i.PayrollId == editDto.Id)
+                .ToListAsync();
+            if (salaryItems.Count != 0)
+                _dbContext.SalaryItems.RemoveRange(salaryItems);
+
+            await SalaryItemHandlerAsync(payroll.Id, editDto.SalaryItems);
+
+            await _dbContext.SaveChangesAsync();
+
+            return OperationResponseDto<Guid, PayrollDetailsDto>.Success(payroll.Id,
+                await GetByIdAsync(payroll.Id));
+        }
+        catch (Exception ex) when (ex is not SIException)
+        {
+            _logger.LogError(ex, "An error occurred while updating the payroll:{Id}", editDto.Id);
+            return OperationResponseDto<Guid, PayrollDetailsDto>.Failure("Failed to update the payroll.");
+        }
     }
 
     public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> DeleteAsync(Guid id)
@@ -110,7 +154,7 @@ public class PayrollAppService : IPayrollAppService
         {
             var payroll = await _dbContext.Payrolls.FirstOrDefaultAsync(i => i.Id == id);
             if (payroll is null)
-                throw new EntityNotFoundException();
+                throw new EntityNotFoundException("Payroll", id);
 
             var salaryItems = await _dbContext.SalaryItems.Where(i => i.PayrollId == id)
                 .ToListAsync();
@@ -126,7 +170,7 @@ public class PayrollAppService : IPayrollAppService
         }
         catch (Exception ex) when (ex is not SIException)
         {
-            _logger.LogError(ex, "An error occurred while deleting the payroll:{id}", id);
+            _logger.LogError(ex, "An error occurred while deleting the payroll:{Id}", id);
             return OperationResponseDto<Guid, PayrollDetailsDto>.Failure("Failed to delete the payroll.");
         }
     }
@@ -160,17 +204,41 @@ public class PayrollAppService : IPayrollAppService
         var salaryItems = from s in _dbContext.SalaryItems.AsNoTracking()
             join si in _dbContext.Parameters.AsNoTracking() on s.SalaryItemTypeId equals si.Id
             where s.PayrollId == payrollId && si.ParameterType == ParameterTypes.SalaryItemType
-            orderby si.Name ascending 
+            orderby si.Name ascending
             select new SalaryItemDto
             {
                 Id = s.Id,
                 SalaryItemTypeId = s.SalaryItemTypeId,
                 SalaryItemType = si.Name,
                 Amount = s.Amount,
-                Positive = s.Positive
+                Income = s.Income
             };
 
         return salaryItems;
+    }
+
+    private async Task SalaryItemHandlerAsync(Guid payrollId, IList<SalaryItemCreationDto> salaryItems)
+    {
+        if (payrollId == Guid.Empty || !salaryItems.Any())
+            return;
+
+        var salaryItemTypeIds = salaryItems.Select(i => i.SalaryItemTypeId)
+            .Distinct()
+            .ToList();
+
+        var salaryItemParameterIds = await _dbContext.Parameters
+            .Where(i => i.ParameterType == ParameterTypes.SalaryItemType && salaryItemTypeIds.Contains(i.Id))
+            .Select(i => i.Id)
+            .ToListAsync();
+
+        var invalidIds = salaryItemTypeIds.Except(salaryItemParameterIds);
+        if (invalidIds.Any())
+            throw new EntityNotFoundException("Salary Item Types", string.Join(',', invalidIds));
+
+        var items = _mapper.Map<List<SalaryItem>>(salaryItems);
+
+        items.ForEach(i => i.PayrollId = payrollId);
+        await _dbContext.SalaryItems.AddRangeAsync(items);
     }
 
     #endregion

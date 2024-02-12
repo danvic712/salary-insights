@@ -1,44 +1,34 @@
 // -----------------------------------------------------------------------
-// <copyright file= "PayrollCreationDto.cs">
+// <copyright file= "SalaryItemCreationDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2024-2-3 18:40
+// Created DateTime: 2024-2-12 14:15
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
 namespace SalaryInsights.Dtos;
 
-public class PayrollCreationDto
+public class SalaryItemCreationDto
 {
     /// <summary>
-    /// Associated company id
+    /// 
     /// </summary>
-    public Guid CompanyId { get; set; }
-
-    /// <summary>
-    /// Month
-    /// </summary>
-    public DateTime Month { get; set; }
+    public Guid SalaryItemTypeId { get; set; }
     
     /// <summary>
     /// 
     /// </summary>
-    public decimal GrossSalary { get; set; }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    public decimal NetSalary { get; set; }
+    public decimal Amount { get; set; }
 
     /// <summary>
     /// Remark
     /// </summary>
     public string? Remark { get; set; }
-
+    
     /// <summary>
-    /// Salary items
+    /// This item was income or expenditure
     /// </summary>
-    public IList<SalaryItemCreationDto> SalaryItems { get; set; } = new List<SalaryItemCreationDto>();
+    public bool Income { get; set; }
 }

@@ -12,4 +12,5 @@ namespace SalaryInsights.Shared.Exceptions;
 
 public class SIException : Exception
 {
+    public string Message { get; set; }
 }

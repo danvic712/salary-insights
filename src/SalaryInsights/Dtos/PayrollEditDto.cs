@@ -1,17 +1,22 @@
 // -----------------------------------------------------------------------
-// <copyright file= "PayrollCreationDto.cs">
+// <copyright file= "PayrollEditDto.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
-// Created DateTime: 2024-2-3 18:40
+// Created DateTime: 2024-2-12 14:53
 // Modified by:
 // Description:
 // -----------------------------------------------------------------------
 
 namespace SalaryInsights.Dtos;
 
-public class PayrollCreationDto
+public class PayrollEditDto
 {
+    /// <summary>
+    /// Primary key
+    /// </summary>
+    public Guid Id { get; set; }
+    
     /// <summary>
     /// Associated company id
     /// </summary>

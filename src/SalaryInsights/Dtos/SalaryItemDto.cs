@@ -40,5 +40,5 @@ public class SalaryItemDto
     /// <summary>
     /// 
     /// </summary>
-    public bool Positive { get; set; }
+    public bool Income { get; set; }
 }

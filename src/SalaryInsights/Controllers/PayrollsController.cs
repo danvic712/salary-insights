@@ -83,12 +83,12 @@ public class PayrollsController : ControllerBase
     /// <summary>
     /// Update the exist payroll
     /// </summary>
-    /// <param name="creationDto">Payroll creation dto</param>
+    /// <param name="editDto">Payroll edit dto</param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync([FromBody] PayrollCreationDto creationDto)
+    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync([FromBody] PayrollEditDto editDto)
     {
-        return await _appService.UpdateAsync(creationDto);
+        return await _appService.UpdateAsync(editDto);
     }
     
     /// <summary>

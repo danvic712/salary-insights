@@ -117,7 +117,7 @@ public class ParameterAppService : IParameterAppService
             var parameter = await _dbContext.Parameters
                 .FirstOrDefaultAsync(i => i.Id == editDto.Id);
             if (parameter is null)
-                throw new EntityNotFoundException();
+                throw new EntityNotFoundException("Parameter", editDto.Id);
 
             _mapper.Map(editDto, parameter);
 
@@ -138,7 +138,7 @@ public class ParameterAppService : IParameterAppService
             var parameter = await _dbContext.Parameters
                 .FirstOrDefaultAsync(i => i.Id == id);
             if (parameter is null)
-                throw new EntityNotFoundException();
+                throw new EntityNotFoundException("Parameter", id);
 
             _dbContext.Parameters.Remove(parameter);
 

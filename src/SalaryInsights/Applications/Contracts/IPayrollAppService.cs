@@ -19,6 +19,6 @@ public interface IPayrollAppService
     Task<PayrollDetailsDto?> GetByIdAsync(Guid id);
     Task<IList<SalaryItemDto>> GetSalaryItemsAsync(Guid id);
     Task<OperationResponseDto<Guid, PayrollDetailsDto>> CreateAsync(PayrollCreationDto creationDto);
-    Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync(PayrollCreationDto creationDto);
+    Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync(PayrollEditDto editDto);
     Task<OperationResponseDto<Guid, PayrollDetailsDto>> DeleteAsync(Guid id);
 }

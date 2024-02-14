@@ -1,9 +1,27 @@
-import { createStore } from 'redux';
-import reducer from './reducer';
+import { configureStore } from "@reduxjs/toolkit";
 
-// ==============================|| REDUX - MAIN STORE ||============================== //
+import * as actionTypes from './actions'
 
-const store = createStore(reducer);
-const persister = 'Free';
+export const initialState = {
+    locale: 'zh_CN'
+};
 
-export { store, persister };
+const customizationReducer = (state = initialState, action) => {
+    let id;
+    switch (action.type) {
+        case actionTypes.CHANGE_LOCALE:
+            id = action.id;
+            return {
+                ...state,
+                locale: action.locale
+            };
+        default:
+            return state;
+    }
+};
+
+export default configureStore({
+    reducer: {
+        customization: customizationReducer
+    },
+})

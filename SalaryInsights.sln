@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryInsights", "SalaryInsights\SalaryInsights.csproj", "{2C046E3B-3008-46C5-9F90-E44B0DD94014}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights", "src\SalaryInsights\SalaryInsights.csproj", "{E8EF7424-64C3-4F3E-8B3D-474414D0C153}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.EntityFrameworkCore", "src\SalaryInsights.EntityFrameworkCore\SalaryInsights.EntityFrameworkCore.csproj", "{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Shared", "src\SalaryInsights.Shared\SalaryInsights.Shared.csproj", "{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{33E933E3-B2ED-47AC-88ED-59CFE8E4D913}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Tests", "tests\SalaryInsights.Tests\SalaryInsights.Tests.csproj", "{A1F645A4-1573-4117-BB9F-A31D716723C3}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "SalaryInsights.Web", "SalaryInsights.Web\SalaryInsights.Web.esproj", "{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,27 +13,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8EF7424-64C3-4F3E-8B3D-474414D0C153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1F645A4-1573-4117-BB9F-A31D716723C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C046E3B-3008-46C5-9F90-E44B0DD94014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C046E3B-3008-46C5-9F90-E44B0DD94014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C046E3B-3008-46C5-9F90-E44B0DD94014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C046E3B-3008-46C5-9F90-E44B0DD94014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E8EF7424-64C3-4F3E-8B3D-474414D0C153} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
-		{11D0CFE6-FD94-49DB-8F8E-1B5882BA1DDF} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
-		{81CA2A2E-BF92-4BA2-A427-2A2D744591A8} = {1AEC1E02-DBEB-4884-9DDE-E1B3552988CF}
-		{A1F645A4-1573-4117-BB9F-A31D716723C3} = {33E933E3-B2ED-47AC-88ED-59CFE8E4D913}
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E276288A-D47C-42D8-868D-E70368558F7E}
 	EndGlobalSection
 EndGlobal

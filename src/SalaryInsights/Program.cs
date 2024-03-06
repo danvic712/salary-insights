@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SalaryInsights.Applications;
@@ -54,6 +55,8 @@ namespace SalaryInsights
                 app.UseAuthorization();
 
                 Log.Information("Starting SalaryInsights");
+                
+                app.MapGroup("/api").MapIdentityApi<IdentityUser>();
 
                 app.MapControllers();
 
@@ -83,7 +86,7 @@ namespace SalaryInsights
                 builder.Services.AddDbContext<SalaryInsightsDbContext>(options =>
                     options.UseSqlite(builder.Configuration.GetConnectionString(nameof(SalaryInsights))));
 
-                builder.Services.AddMemoryCache();
+                builder.Services.AddDistributedMemoryCache();
 
                 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
@@ -91,6 +94,12 @@ namespace SalaryInsights
                 builder.Services.AddScoped<IPayrollAppService, PayrollAppService>();
 
                 builder.Services.AddAuthorization();
+                
+                // IdentityService
+                //
+                builder.Services
+                    .AddIdentityApiEndpoints<IdentityUser>()
+                    .AddEntityFrameworkStores<SalaryInsightsDbContext>();
 
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
                 //

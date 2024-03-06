@@ -8,12 +8,14 @@
 // Description:
 // -----------------------------------------------------------------------
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SalaryInsights.EntityFrameworkCore.Models;
 
 namespace SalaryInsights.EntityFrameworkCore;
 
-public class SalaryInsightsDbContext : DbContext
+public class SalaryInsightsDbContext : IdentityDbContext<IdentityUser>
 {
     public SalaryInsightsDbContext(
         DbContextOptions<SalaryInsightsDbContext> options) : base(options)
@@ -26,8 +28,8 @@ public class SalaryInsightsDbContext : DbContext
 
     public DbSet<SalaryItem> SalaryItems { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }
+    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    // {
+    //     modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+    // }
 }

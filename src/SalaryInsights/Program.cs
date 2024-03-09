@@ -2,9 +2,14 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using SalaryInsights.Applications;
-using SalaryInsights.Applications.Contracts;
-using SalaryInsights.EntityFrameworkCore;
+using SalaryInsights.Applications.Charts;
+using SalaryInsights.Applications.Charts.Contracts;
+using SalaryInsights.Applications.Parameters;
+using SalaryInsights.Applications.Parameters.Contracts;
+using SalaryInsights.Applications.Payrolls;
+using SalaryInsights.Applications.Payrolls.Contracts;
+using SalaryInsights.Applications.Shared;
+using SalaryInsights.Applications.Shared.Contracts;
 using Serilog;
 using Serilog.Events;
 
@@ -55,7 +60,7 @@ namespace SalaryInsights
                 app.UseAuthorization();
 
                 Log.Information("Starting SalaryInsights");
-                
+
                 app.MapGroup("/api").MapIdentityApi<IdentityUser>();
 
                 app.MapControllers();
@@ -90,11 +95,15 @@ namespace SalaryInsights
 
                 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
-                builder.Services.AddScoped<IParameterAppService, ParameterAppService>();
-                builder.Services.AddScoped<IPayrollAppService, PayrollAppService>();
+                builder.Services.AddHttpContextAccessor();
+
+                builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+                builder.Services.AddScoped<IChartManager, ChartManager>();
+                builder.Services.AddScoped<IParameterManager, ParameterManager>();
+                builder.Services.AddScoped<IPayrollManager, PayrollManager>();
 
                 builder.Services.AddAuthorization();
-                
+
                 // IdentityService
                 //
                 builder.Services
@@ -124,7 +133,7 @@ namespace SalaryInsights
                     });
 
                     options.DescribeAllParametersInCamelCase();
-                
+
                     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
                 });

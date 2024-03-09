@@ -9,10 +9,10 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
-using SalaryInsights.Applications.Contracts;
-using SalaryInsights.Dtos;
-using SalaryInsights.Shared.Dtos;
-using SalaryInsights.Shared.Enums;
+using SalaryInsights.Applications.Parameters.Contracts;
+using SalaryInsights.Applications.Parameters.Dtos;
+using SalaryInsights.Applications.Shared.Dtos;
+using SalaryInsights.Enums;
 
 namespace SalaryInsights.Controllers;
 
@@ -25,15 +25,15 @@ public class ParametersController : ControllerBase
 {
     #region Initializes
 
-    private readonly IParameterAppService _appService;
+    private readonly IParameterManager _manager;
 
     /// <summary>
     /// Ctor
     /// </summary>
-    /// <param name="appService"></param>
-    public ParametersController(IParameterAppService appService)
+    /// <param name="manager"></param>
+    public ParametersController(IParameterManager manager)
     {
-        _appService = appService;
+        _manager = manager;
     }
 
     #endregion
@@ -45,9 +45,9 @@ public class ParametersController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("types")]
-    public IList<SelectOptionDto> GetTypes()
+    public IList<SelectOptionResponse> GetTypes()
     {
-        return _appService.GetTypes();
+        return _manager.GetTypes();
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class ParametersController : ControllerBase
     [HttpGet("types/{parameterType}")]
     public async Task<IList<ParameterDto>> GetAsync([FromRoute] ParameterTypes parameterType, [FromQuery] string? name)
     {
-        return await _appService.GetAsync(parameterType, name);
+        return await _manager.GetAsync(parameterType, name);
     }
 
     /// <summary>
@@ -70,18 +70,18 @@ public class ParametersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ParameterDto> GetByIdAsync([FromRoute] Guid id)
     {
-        return await _appService.GetByIdAsync(id);
+        return await _manager.GetByIdAsync(id);
     }
 
     /// <summary>
     /// Create a new parameter
     /// </summary>
-    /// <param name="creationDto">Parameter creation dto</param>
+    /// <param name="creationRequest">Parameter creation dto</param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<OperationResponseDto<Guid, ParameterDto>> CreateAsync([FromBody] ParameterCreationDto creationDto)
+    public async Task<OperationResponse<Guid, ParameterDto>> CreateAsync([FromBody] ParameterCreationRequest creationRequest)
     {
-        return await _appService.CreateAsync(creationDto);
+        return await _manager.CreateAsync(creationRequest);
     }
     
     /// <summary>
@@ -90,9 +90,9 @@ public class ParametersController : ControllerBase
     /// <param name="editDto">Parameter edit dto</param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<OperationResponseDto<Guid, ParameterDto>> UpdateAsync([FromBody] ParameterEditDto editDto)
+    public async Task<OperationResponse<Guid, ParameterDto>> UpdateAsync([FromBody] ParameterEditDto editDto)
     {
-        return await _appService.UpdateAsync(editDto);
+        return await _manager.UpdateAsync(editDto);
     }
     
     /// <summary>
@@ -101,9 +101,9 @@ public class ParametersController : ControllerBase
     /// <param name="id">Parameter id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<OperationResponseDto<Guid, ParameterDto>> DeleteAsync([FromRoute] Guid id)
+    public async Task<OperationResponse<Guid, ParameterDto>> DeleteAsync([FromRoute] Guid id)
     {
-        return await _appService.DeleteAsync(id);
+        return await _manager.DeleteAsync(id);
     }
 
     #endregion

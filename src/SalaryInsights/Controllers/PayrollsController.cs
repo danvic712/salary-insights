@@ -9,9 +9,9 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
-using SalaryInsights.Applications.Contracts;
-using SalaryInsights.Dtos;
-using SalaryInsights.Shared.Dtos;
+using SalaryInsights.Applications.Payrolls.Contracts;
+using SalaryInsights.Applications.Payrolls.Dtos;
+using SalaryInsights.Applications.Shared.Dtos;
 
 namespace SalaryInsights.Controllers;
 
@@ -21,15 +21,15 @@ public class PayrollsController : ControllerBase
 {
     #region Initializes
 
-    private readonly IPayrollAppService _appService;
+    private readonly IPayrollManager _manager;
 
     /// <summary>
     /// Ctor
     /// </summary>
-    /// <param name="appService"></param>
-    public PayrollsController(IPayrollAppService appService)
+    /// <param name="manager"></param>
+    public PayrollsController(IPayrollManager manager)
     {
-        _appService = appService;
+        _manager = manager;
     }
 
     #endregion
@@ -44,7 +44,7 @@ public class PayrollsController : ControllerBase
     [HttpGet("query")]
     public async Task<PaginationResource<PayrollDto>> Query([FromQuery] PayrollQueryDto queryDto)
     {
-        return await _appService.QueryAsync(queryDto);
+        return await _manager.QueryAsync(queryDto);
     }
     
     /// <summary>
@@ -55,7 +55,7 @@ public class PayrollsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<PayrollDetailsDto?> GetByIdAsync([FromRoute] Guid id)
     {
-        return await _appService.GetByIdAsync(id);
+        return await _manager.GetByIdAsync(id);
     }
     
     /// <summary>
@@ -66,7 +66,7 @@ public class PayrollsController : ControllerBase
     [HttpGet("{id}/salary-items")]
     public async Task<IList<SalaryItemDto>> GetSalaryItemsAsync([FromRoute] Guid id)
     {
-        return await _appService.GetSalaryItemsAsync(id);
+        return await _manager.GetSalaryItemsAsync(id);
     }
     
     /// <summary>
@@ -75,9 +75,9 @@ public class PayrollsController : ControllerBase
     /// <param name="creationDto">Payroll creation dto</param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> CreateAsync([FromBody] PayrollCreationDto creationDto)
+    public async Task<OperationResponse<Guid, PayrollDetailsDto>> CreateAsync([FromBody] PayrollCreationDto creationDto)
     {
-        return await _appService.CreateAsync(creationDto);
+        return await _manager.CreateAsync(creationDto);
     }
     
     /// <summary>
@@ -86,9 +86,9 @@ public class PayrollsController : ControllerBase
     /// <param name="editDto">Payroll edit dto</param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> UpdateAsync([FromBody] PayrollEditDto editDto)
+    public async Task<OperationResponse<Guid, PayrollDetailsDto>> UpdateAsync([FromBody] PayrollEditDto editDto)
     {
-        return await _appService.UpdateAsync(editDto);
+        return await _manager.UpdateAsync(editDto);
     }
     
     /// <summary>
@@ -97,9 +97,9 @@ public class PayrollsController : ControllerBase
     /// <param name="id">Payroll id</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<OperationResponseDto<Guid, PayrollDetailsDto>> DeleteAsync([FromRoute] Guid id)
+    public async Task<OperationResponse<Guid, PayrollDetailsDto>> DeleteAsync([FromRoute] Guid id)
     {
-        return await _appService.DeleteAsync(id);
+        return await _manager.DeleteAsync(id);
     }
 
     #endregion

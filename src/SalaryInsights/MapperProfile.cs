@@ -9,8 +9,8 @@
 // -----------------------------------------------------------------------
 
 using AutoMapper;
-using SalaryInsights.Dtos;
-using SalaryInsights.EntityFrameworkCore.Models;
+using SalaryInsights.Applications.Parameters.Dtos;
+using SalaryInsights.Models;
 
 namespace SalaryInsights;
 
@@ -18,7 +18,7 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<ParameterCreationDto, Parameter>(MemberList.Destination);
+        CreateMap<ParameterCreationRequest, Parameter>(MemberList.Destination);
         
         CreateMap<Parameter, ParameterDto>(MemberList.Destination)
             .ReverseMap();

@@ -15,8 +15,6 @@ FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["SalaryInsights/SalaryInsights.csproj", "SalaryInsights/"]
-COPY ["SalaryInsights.EntityFrameworkCore/SalaryInsights.EntityFrameworkCore.csproj", "SalaryInsights.EntityFrameworkCore/"]
-COPY ["SalaryInsights.Shared/SalaryInsights.Shared.csproj", "SalaryInsights.Shared/"]
 COPY ["SalaryInsights.Web/SalaryInsights.Web.esproj", "SalaryInsights.Web/"]
 RUN dotnet restore "./SalaryInsights/SalaryInsights.csproj"
 COPY . .

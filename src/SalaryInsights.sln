@@ -13,10 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2750001A-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Tests", "SalaryInsights.Tests\SalaryInsights.Tests.csproj", "{6D64B66F-7333-40F3-9811-2D8BD56BF096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.Shared", "SalaryInsights.Shared\SalaryInsights.Shared.csproj", "{92D674FD-66E6-45C1-B4DA-246A5F98FF19}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryInsights.EntityFrameworkCore", "SalaryInsights.EntityFrameworkCore\SalaryInsights.EntityFrameworkCore.csproj", "{3EAFA5E7-DAD6-4598-A19B-E558BF86B3B0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,14 +33,6 @@ Global
 		{6D64B66F-7333-40F3-9811-2D8BD56BF096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D64B66F-7333-40F3-9811-2D8BD56BF096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D64B66F-7333-40F3-9811-2D8BD56BF096}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92D674FD-66E6-45C1-B4DA-246A5F98FF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92D674FD-66E6-45C1-B4DA-246A5F98FF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92D674FD-66E6-45C1-B4DA-246A5F98FF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92D674FD-66E6-45C1-B4DA-246A5F98FF19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3EAFA5E7-DAD6-4598-A19B-E558BF86B3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3EAFA5E7-DAD6-4598-A19B-E558BF86B3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3EAFA5E7-DAD6-4598-A19B-E558BF86B3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3EAFA5E7-DAD6-4598-A19B-E558BF86B3B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,7 +44,5 @@ Global
 		{2C046E3B-3008-46C5-9F90-E44B0DD94014} = {7D67EE65-244E-44A8-83D6-ADABF2324602}
 		{7D5CBC4A-12BA-408C-AE4D-2791518E5AF0} = {7D67EE65-244E-44A8-83D6-ADABF2324602}
 		{6D64B66F-7333-40F3-9811-2D8BD56BF096} = {2750001A-C46F-432B-8DDA-B0BA7D891593}
-		{92D674FD-66E6-45C1-B4DA-246A5F98FF19} = {7D67EE65-244E-44A8-83D6-ADABF2324602}
-		{3EAFA5E7-DAD6-4598-A19B-E558BF86B3B0} = {7D67EE65-244E-44A8-83D6-ADABF2324602}
 	EndGlobalSection
 EndGlobal

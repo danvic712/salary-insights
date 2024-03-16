@@ -13,8 +13,9 @@ export default function FooterComponent() {
                 display: 'flex',
                 color: 'var(--semi-color-text-2)',
                 fontSize: '14px',
-                margin: '0px 20px',
+                padding: '0px 20px',
                 flexDirection: 'row-reverse',
+                background: 'var(--semi-color-fill-0)',
             }}
         >
             <span>

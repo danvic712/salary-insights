@@ -1,13 +1,13 @@
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
-import RouteRenders from './routes/index';
+import RenderRouters from "./routes/index";
 
 function App() {
-    return (
-        <Suspense fallback={<div className="container">Loading...</div>}>
-            <RouteRenders />
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<div className="container">Loading...</div>}>
+      <RenderRouters />
+    </Suspense>
+  );
 }
 
 export default App;

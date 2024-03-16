@@ -10,39 +10,18 @@ import * as styles from './index.scss';
 export default function MainLayout() {
     const { Content } = Layout;
 
-    const style = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 30,
-        width: 30,
-        borderRadius: '100%',
-        backgroundColor: '#0077fa',
-        color: '#fff',
-        bottom: 100,
-    };
-
     return (
-        <Layout className={styles.rootSidenavTab}>
+        <Layout>
             <Header />
             <Content
                 style={{
-                    padding: '20px',
-                    backgroundColor: 'var(--semi-color-bg-1)',
+                    backgroundColor: 'var(--semi-color-fill-0)',
+                    height: '100vh',
                 }}
             >
-                <div
-                    style={{
-                        borderRadius: '10px',
-                        border: '1px solid var(--semi-color-border)',
-                        height: '125vh',
-                        padding: '0px 20px',
-                    }}
-                >
-                    <Outlet />
-                </div>
+                <Outlet />
             </Content>
-            <BackTop style={style} />
+            <BackTop />
             <Footer />
         </Layout>
     );

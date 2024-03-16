@@ -1,17 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { initVChartSemiTheme } from "@visactor/vchart-semi-theme";
 
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from './store/index.js'
+import App from "./App.jsx";
+import store from "./store/index.js";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+initVChartSemiTheme();
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <App />
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

@@ -9,28 +9,28 @@ import {
   Card,
   Row,
   Col,
+  Image,
+  Form,
+  Notification,
 } from "@douyinfe/semi-ui";
-import { IconSemiLogo } from "@douyinfe/semi-icons";
+import { IconSemiLogo, IconUser, IconLock } from "@douyinfe/semi-icons";
 import { IconFaq, IconLocaleProvider } from "@douyinfe/semi-icons-lab";
 
 export default function Login() {
   let year = new Date().getFullYear();
 
   const { Header, Content, Footer } = Layout;
-  const { Text } = Typography;
+  const { Text, Title } = Typography;
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    // Here you would usually send a request to your backend to authenticate the user
-    // For the sake of this example, we're using a mock authentication
-    if (username === "user" && password === "password") {
-      // Replace with actual authentication logic
-      await login({ username });
-    } else {
-      alert("Invalid username or password");
-    }
+  const handleLogin = async (values) => {
+    console.log(values);
+    Notification.success({
+      title: "Login success",
+      content: "Welcome back, Danvic Wang!",
+      onClose: () => {
+        window.location.href = "/";
+      },
+    });
   };
 
   return (
@@ -81,31 +81,75 @@ export default function Login() {
           flex: 1,
         }}
       >
-        <Row type="flex" justify="space-around" align="middle">
-          <Col span={10}>
-            <div>
-              <form onSubmit={handleLogin}>
-                <div>
-                  <label htmlFor="username">Username:</label>
-                  <input
-                    id="username"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="password">Password:</label>
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <button type="submit">Login</button>
-              </form>
-            </div>
+        <Row
+          type="flex"
+          justify="space-around"
+          align="middle"
+          style={{ height: "70vh" }}
+        >
+          <Col span={8}>
+            <Card
+              shadows="hover"
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <Image
+                height={72}
+                width={72}
+                preview={false}
+                src="https://lf9-static.semi.design/obj/semi-tos/template/caee33dd-322d-4e91-a4ed-eea1b94605bb.png"
+              />
+              <Title heading={2} style={{ margin: "15px 0px" }}>
+                Salary Insights
+              </Title>
+              <Form onSubmit={(values) => handleLogin(values)}>
+                {({ formState, values, formApi }) => (
+                  <>
+                    <Form.Input
+                      label={{ text: "用户名" }}
+                      prefix={<IconUser />}
+                      field="userName"
+                      placeholder="输入用户名"
+                      block={true}
+                      rules={[
+                        { required: true, message: "required error" },
+                        { type: "string", message: "type error" },
+                        {
+                          validator: (rule, value) => value === "semi",
+                          message: "should be semi",
+                        },
+                      ]}
+                    />
+                    <Form.Input
+                      label={{ text: "密码" }}
+                      prefix={<IconLock />}
+                      field="password"
+                      mode="password"
+                      placeholder="输入密码"
+                      block={true}
+                      rules={[
+                        { required: true, message: "required error" },
+                        { type: "string", message: "type error" },
+                        {
+                          validator: (rule, value) => value === "semi",
+                          message: "should be semi",
+                        },
+                      ]}
+                    />
+
+                    <Button
+                      block={true}
+                      htmlType="submit"
+                      theme="solid"
+                      style={{ margin: "12px 0px" }}
+                    >
+                      登录
+                    </Button>
+                  </>
+                )}
+              </Form>
+            </Card>
           </Col>
         </Row>
       </Content>

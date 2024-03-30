@@ -7,6 +7,10 @@ const Login = lazy(() => import("../pages/login"));
 
 const Analysis = lazy(() => import("../pages/dashboard/analysis"));
 
+const Payroll = lazy(() => import("../pages/payroll"));
+
+const Configuration = lazy(() => import("../pages/settings/configurations"));
+
 const Exception = lazy(() => import("../pages/exception"));
 
 const authRoutes = {
@@ -23,12 +27,16 @@ const mainRoutes = {
       element: <Analysis />,
     },
     {
-      path: "login",
-      element: <Login />,
+      path: "payroll",
+      element: <Payroll />,
     },
     {
       path: "analysis",
       element: <Analysis />,
+    },
+    {
+      path: "configurations",
+      element: <Configuration />,
     },
   ],
 };
@@ -45,5 +53,5 @@ const exceptionRoutes = {
 };
 
 export default function RenderRouters() {
-  return useRoutes([authRoutes, mainRoutes,exceptionRoutes]);
+  return useRoutes([authRoutes, mainRoutes, exceptionRoutes]);
 }

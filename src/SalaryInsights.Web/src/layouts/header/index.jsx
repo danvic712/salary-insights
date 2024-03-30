@@ -42,16 +42,18 @@ export default function HeaderComponent() {
           },
           {
             itemKey: "setting",
-            text: "系统配置",
+            text: "系统管理",
             icon: <IconConfig size="large" />,
+            items: ["基础配置", "用户中心"],
           },
         ]}
         renderWrapper={({ itemElement, props }) => {
           const routerMap = {
             dashboard: "/analysis",
             每月薪资: "/payroll",
-            setting: "/settings",
+            基础配置: "/configurations",
             数据工具: "/data-tools",
+            用户中心: "/users",
           };
           return (
             <Link

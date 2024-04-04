@@ -7,7 +7,7 @@ import Footer from "./footer";
 
 import * as styles from "./index.scss";
 
-export default function MainLayout() {
+export default function MainLayout(props) {
   const { Content } = Layout;
 
   return (
@@ -19,7 +19,7 @@ export default function MainLayout() {
           minHeight: "100vh",
         }}
       >
-        <Outlet />
+        {props.outlet ? props.outlet : <Outlet />}
       </Content>
       <BackTop />
       <Footer />

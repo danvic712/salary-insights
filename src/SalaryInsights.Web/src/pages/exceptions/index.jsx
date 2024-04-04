@@ -16,16 +16,12 @@ export default function Exception() {
 
   return (
     <Empty
-      title={error.statusText}
       image={<IllustrationNotFound style={style} />}
       darkModeImage={<IllustrationNotFoundDark style={style} />}
       description={
         <div>
           <h1>Oops!</h1>
-          <p>Sorry, Sorry, an unexpected error has occurred.</p>
-          <p>
-            <i>{error.message}</i>
-          </p>
+          <p>Sorry, an unexpected error has occurred.</p>
         </div>
       }
     ></Empty>

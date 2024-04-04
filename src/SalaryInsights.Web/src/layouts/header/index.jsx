@@ -38,7 +38,7 @@ export default function HeaderComponent() {
             itemKey: "dataCenter",
             text: "数据中心",
             icon: <IconDescriptions size="large" />,
-            items: ["每月薪资", "数据工具"],
+            items: ["每月薪资", "薪资分析"],
           },
           {
             itemKey: "setting",
@@ -49,10 +49,10 @@ export default function HeaderComponent() {
         ]}
         renderWrapper={({ itemElement, props }) => {
           const routerMap = {
-            dashboard: "/analysis",
+            dashboard: "/dashboard",
             每月薪资: "/payroll",
-            基础配置: "/configurations",
-            数据工具: "/data-tools",
+            基础配置: "/settings",
+            薪资分析: "/data-tools",
             用户中心: "/users",
           };
           return (

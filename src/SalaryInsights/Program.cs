@@ -53,6 +53,8 @@ namespace SalaryInsights
                 {
                     app.UseSwagger();
                     app.UseSwaggerUI();
+
+                    app.UseDeveloperExceptionPage();
                 }
 
                 app.UseHttpsRedirection();
@@ -85,8 +87,10 @@ namespace SalaryInsights
 
             void ConfigureServices(WebApplicationBuilder builder)
             {
-                // Add services to the container.
+                // Add services to the container
+                //
                 builder.Services.AddControllers();
+                builder.Services.AddProblemDetails();
 
                 builder.Services.AddDbContext<SalaryInsightsDbContext>(options =>
                     options.UseSqlite(builder.Configuration.GetConnectionString(nameof(SalaryInsights))));

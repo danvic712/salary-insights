@@ -75,16 +75,16 @@ export default function HeaderComponent() {
               }}
             />
             <Select
-              defaultValue="Chinese"
+              defaultValue="zh_CN"
               style={{
-                width: 120,
+                width: 140,
                 color: "var(--semi-color-text-2)",
                 marginRight: "12px",
               }}
               insetLabel={<IconLocaleProvider />}
             >
-              <Select.Option value="Chinese">中文</Select.Option>
-              <Select.Option value="English">English</Select.Option>
+              <Select.Option value="zh_CN">简体中文</Select.Option>
+              <Select.Option value="en_US">English</Select.Option>
             </Select>
             <Dropdown
               position="bottomRight"

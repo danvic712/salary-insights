@@ -26,6 +26,7 @@ public class ParameterManager : BaseManager, IParameterManager
 {
     #region Initialzies
 
+    private readonly ICurrentUser _currentUser;
     private readonly ILogger<ParameterManager> _logger;
     private readonly IMapper _mapper;
     private readonly SalaryInsightsDbContext _dbContext;
@@ -41,8 +42,9 @@ public class ParameterManager : BaseManager, IParameterManager
         ICurrentUser currentUser,
         ILogger<ParameterManager> logger,
         IMapper mapper,
-        SalaryInsightsDbContext dbContext): base(currentUser)
+        SalaryInsightsDbContext dbContext) : base(currentUser)
     {
+        _currentUser = currentUser;
         _logger = logger;
         _mapper = mapper;
         _dbContext = dbContext;
@@ -55,7 +57,7 @@ public class ParameterManager : BaseManager, IParameterManager
     public IList<SelectOptionResponse> GetTypes()
     {
         return Utils.GetEnumOptions<ParameterTypes>()
-            .OrderBy(i => i.Text)
+            .OrderBy(i => i.Label)
             .ToList();
     }
 

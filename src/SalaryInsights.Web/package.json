@@ -11,14 +11,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@douyinfe/semi-icons": "^2.55.5",
     "@douyinfe/semi-icons-lab": "^2.52.0",
     "@douyinfe/semi-ui": "^2.52.0",
     "@reduxjs/toolkit": "^2.1.0",
     "@visactor/react-vchart": "^1.10.0",
     "@visactor/vchart-semi-theme": "^1.9.4",
     "axios": "^1.6.7",
+    "i18next": "^23.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^14.1.0",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.0"
   },

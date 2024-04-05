@@ -25,15 +25,15 @@ public static class Utils
             if (field == null)
                 continue;
 
-            var attribute = (DisplayAttribute)Attribute.GetCustomAttribute(field, typeof(DisplayAttribute));
-            var text = attribute == null
+            var text = Attribute.GetCustomAttribute(field, typeof(DisplayAttribute)) is not DisplayAttribute attribute
                 ? value.ToString()
                 : attribute.Name;
 
             options.Add(new SelectOptionResponse
             {
-                Id = value.ToString(),
-                Text = text
+                Key = Convert.ToInt32(value).ToString(),
+                Value = value.ToString(),
+                Label = text ?? ""
             });
         }
 

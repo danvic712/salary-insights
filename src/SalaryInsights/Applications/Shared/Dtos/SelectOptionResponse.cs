@@ -12,6 +12,7 @@ namespace SalaryInsights.Applications.Shared.Dtos;
 
 public class SelectOptionResponse
 {
-    public string Id { get; set; }
-    public string Text { get; set; }
+    public string Key { get; set; }
+    public string Value { get; set; }
+    public string Label { get; set; }
 }

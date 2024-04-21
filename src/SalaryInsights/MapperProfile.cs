@@ -9,7 +9,7 @@
 // -----------------------------------------------------------------------
 
 using AutoMapper;
-using SalaryInsights.Applications.Parameters.Dtos;
+using SalaryInsights.Applications.Companies.Dtos;
 using SalaryInsights.Models;
 
 namespace SalaryInsights;
@@ -18,9 +18,11 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<ParameterCreationRequest, Parameter>(MemberList.Destination);
+        CreateMap<CompanyCreationRequest, Company>(MemberList.Destination);
         
-        CreateMap<Parameter, ParameterDto>(MemberList.Destination)
+        CreateMap<CompanyEditRequest, Company>(MemberList.Destination);
+
+        CreateMap<Company, CompanyResponse>(MemberList.Destination)
             .ReverseMap();
     }
 }

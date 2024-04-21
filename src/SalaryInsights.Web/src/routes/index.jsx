@@ -8,7 +8,8 @@ const Dashboard = lazy(() => import("../pages/dashboard"));
 
 const Payroll = lazy(() => import("../pages/payroll"));
 
-const Settings = lazy(() => import("../pages/settings"));
+const CompanyList = lazy(() => import("../pages/company/CompanyList.jsx"));
+
 const User = lazy(() => import("../pages/users"));
 
 const Exception = lazy(() => import("../pages/exceptions"));
@@ -35,8 +36,8 @@ const Routes = [
         element: <Dashboard />,
       },
       {
-        path: "settings",
-        element: <Settings />,
+        path: "company",
+        element: <CompanyList />,
       },
       {
         path: "users",

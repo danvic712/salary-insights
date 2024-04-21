@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// <copyright file= "PaginationResponse.cs">
+// <copyright file= "GridResponse.cs">
 //     Copyright (c) Danvic.Wang All rights reserved.
 // </copyright>
 // Author: Danvic.Wang
@@ -10,13 +10,19 @@
 
 namespace SalaryInsights.Applications.Shared.Dtos;
 
-public class PaginationResponse<T> : ResponseBase<PaginationResource<T>>
-{
-}
-
-public class PaginationResource<T>
+public class GridResponse<T>
 {
     #region Properties
+
+    /// <summary>
+    /// Grid summary
+    /// </summary>
+    public Dictionary<string, string> Summary { get; set; } = new();
+    
+    /// <summary>
+    /// Current Page
+    /// </summary>
+    public int CurrentPage { get; set; }
 
     /// <summary>
     /// Total data

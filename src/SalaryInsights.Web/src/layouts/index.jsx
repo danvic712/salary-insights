@@ -11,7 +11,11 @@ export default function MainLayout(props) {
   const { Content } = Layout;
 
   return (
-    <Layout>
+    <Layout
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Header />
       <Content
         style={{

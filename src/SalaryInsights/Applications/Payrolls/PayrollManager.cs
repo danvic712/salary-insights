@@ -52,7 +52,7 @@ public class PayrollManager : BaseManager, IPayrollManager
 
     #region Services
 
-    public async Task<PaginationResource<PayrollDto>> QueryAsync(PayrollQueryDto queryDto)
+    public async Task<GridResponse<PayrollDto>> QueryAsync(PayrollQueryDto queryDto)
     {
         var query = GetPayrolls();
 
@@ -73,7 +73,7 @@ public class PayrollManager : BaseManager, IPayrollManager
             .Take(queryDto.PageSize)
             .ToListAsync();
 
-        return new PaginationResource<PayrollDto>
+        return new GridResponse<PayrollDto>
         {
             TotalCount = total,
             Data = payrolls

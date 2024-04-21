@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SalaryInsights.Applications.Charts;
 using SalaryInsights.Applications.Charts.Contracts;
-using SalaryInsights.Applications.Parameters;
-using SalaryInsights.Applications.Parameters.Contracts;
+using SalaryInsights.Applications.Companies;
+using SalaryInsights.Applications.Companies.Contracts;
 using SalaryInsights.Applications.Payrolls;
 using SalaryInsights.Applications.Payrolls.Contracts;
 using SalaryInsights.Applications.Shared;
@@ -103,7 +103,7 @@ namespace SalaryInsights
 
                 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
                 builder.Services.AddScoped<IChartManager, ChartManager>();
-                builder.Services.AddScoped<IParameterManager, ParameterManager>();
+                builder.Services.AddScoped<ICompanyManager, CompanyManager>();
                 builder.Services.AddScoped<IPayrollManager, PayrollManager>();
 
                 builder.Services.AddAuthorization();

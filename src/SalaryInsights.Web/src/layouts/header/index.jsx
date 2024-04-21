@@ -44,14 +44,14 @@ export default function HeaderComponent() {
             itemKey: "setting",
             text: "系统管理",
             icon: <IconConfig size="large" />,
-            items: ["基础配置", "用户中心"],
+            items: ["任职公司", "用户中心"],
           },
         ]}
         renderWrapper={({ itemElement, props }) => {
           const routerMap = {
             dashboard: "/dashboard",
             每月薪资: "/payroll",
-            基础配置: "/settings",
+            任职公司: "/company",
             薪资分析: "/data-tools",
             用户中心: "/users",
           };

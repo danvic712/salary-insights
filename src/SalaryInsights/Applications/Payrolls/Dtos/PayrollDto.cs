@@ -21,7 +21,7 @@ public class PayrollDto
     /// <summary>
     /// Associated company id
     /// </summary>
-    public Guid CompanyId { get; set; }
+    public Guid? CompanyId { get; set; }
     
     /// <summary>
     /// 

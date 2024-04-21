@@ -42,7 +42,7 @@ public class PayrollsController : ControllerBase
     /// <param name="queryDto">Query conditions</param>
     /// <returns></returns>
     [HttpGet("query")]
-    public async Task<PaginationResource<PayrollDto>> Query([FromQuery] PayrollQueryDto queryDto)
+    public async Task<GridResponse<PayrollDto>> Query([FromQuery] PayrollQueryDto queryDto)
     {
         return await _manager.QueryAsync(queryDto);
     }

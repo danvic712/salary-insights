@@ -15,7 +15,7 @@ namespace SalaryInsights.Applications.Payrolls.Contracts;
 
 public interface IPayrollManager
 {
-    Task<PaginationResource<PayrollDto>> QueryAsync(PayrollQueryDto queryDto);
+    Task<GridResponse<PayrollDto>> QueryAsync(PayrollQueryDto queryDto);
     Task<PayrollDetailsDto?> GetByIdAsync(Guid id);
     Task<IList<SalaryItemDto>> GetSalaryItemsAsync(Guid id);
     Task<OperationResponse<Guid, PayrollDetailsDto>> CreateAsync(PayrollCreationDto creationDto);

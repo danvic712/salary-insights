@@ -22,6 +22,8 @@ public class SalaryInsightsDbContext : IdentityDbContext<IdentityUser>
     {
     }
 
+    public DbSet<Company> Companies { get; set; }
+    
     public DbSet<Parameter> Parameters { get; set; }
 
     public DbSet<Payroll> Payrolls { get; set; }

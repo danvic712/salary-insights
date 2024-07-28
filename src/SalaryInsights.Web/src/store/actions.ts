@@ -1,0 +1,1 @@
+export const CHANGE_LOCALE = '@customization/CHANGE_LOCALE';

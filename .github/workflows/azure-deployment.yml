@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App
+name: Deploy container app to Azure
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
 
     - name: Extract metadata (tags) for Docker
       id: meta
-      run: echo ::set-output name=tags::${GITHUB_REF#refs/tags/}
+      run: echo ::set-output name=tags::${GITHUB_REF#refs/tags/v}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3

@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  Build:
     runs-on: 'ubuntu-latest'
 
     steps:
@@ -33,12 +33,16 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/danvic712/salary-insights:${{ steps.meta.outputs.tags }}
         file: ./Dockerfile
+        platforms: linux/amd64,linux/arm64
+        tags: |
+            index.docker.io/danvic712/salary-insights:latest
+            index.docker.io/danvic712/salary-insights:${{ steps.meta.outputs.tags }}
+        
 
-  deploy:
+  Deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: Build
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -51,4 +55,4 @@ jobs:
         app-name: 'salary-insights'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_90e0986b783b4c63b1bc01b37ccbdcd8 }}
-        images: 'index.docker.io/danvic712/salary-insights:${{ steps.meta.outputs.tags }}'
+        images: index.docker.io/danvic712/salary-insights:latest

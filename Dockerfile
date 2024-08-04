@@ -10,13 +10,13 @@ RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 RUN apt-get -y install nodejs
 
-
 FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SalaryInsights/SalaryInsights.csproj", "SalaryInsights/"]
-COPY ["SalaryInsights.Web/SalaryInsights.Web.esproj", "SalaryInsights.Web/"]
+COPY ["src/SalaryInsights", "SalaryInsights/"]
+COPY ["src/SalaryInsights.Web", "SalaryInsights.Web/"]
 RUN dotnet restore "./SalaryInsights/SalaryInsights.csproj"
+RUN ls
 COPY . .
 WORKDIR "/src/SalaryInsights"
 RUN dotnet build "./SalaryInsights.csproj" -c $BUILD_CONFIGURATION -o /app/build

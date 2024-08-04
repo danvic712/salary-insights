@@ -1,12 +1,11 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - salary-insights
+name: Build and deploy container app to Azure Web App
 
 on:
   push:
-    branches:
-      - main
+    tags: [ 'v*.*.*' ]
   workflow_dispatch:
 
 jobs:
@@ -26,11 +25,15 @@ jobs:
         username: ${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}
         password: ${{ secrets.AzureAppService_ContainerPassword_aff680256ac541f6a3d8d28f82225e07 }}
 
+    - name: Extract metadata (tags) for Docker
+      id: meta
+      run: echo ::set-output name=tags::${GITHUB_REF#refs/tags/}
+
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}/danvic712/salary-insights:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}/danvic712/salary-insights:${{ steps.meta.outputs.tags }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +51,4 @@ jobs:
         app-name: 'salary-insights'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_90e0986b783b4c63b1bc01b37ccbdcd8 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}/danvic712/salary-insights:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}/danvic712/salary-insights:${{ steps.meta.outputs.tags }}'

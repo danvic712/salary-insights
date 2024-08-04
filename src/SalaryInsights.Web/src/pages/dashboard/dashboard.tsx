@@ -78,53 +78,10 @@ export default function Dashboard() {
     []
   );
 
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: startOfYear(new Date()),
-    to: new Date(),
-  });
-
   return (
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <div className="gap-2">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                  "justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      {format(date.from, "yyyy/MM/dd")} -{" "}
-                      {format(date.to, "yyyy/MM/dd")}
-                    </>
-                  ) : (
-                    format(date.from, "yyyy/MM/dd")
-                  )
-                ) : (
-                  <span>Pick a date</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="end">
-              <Calendar
-                initialFocus
-                mode="range"
-                defaultMonth={date?.from}
-                selected={date}
-                onSelect={setDate}
-                numberOfMonths={2}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
         <Card x-chunk="dashboard-01-chunk-0">
@@ -182,7 +139,9 @@ export default function Dashboard() {
             <div className="flex flex-1 flex-col gap-1 p-6">
               <CardTitle>
                 Recent Salary
-                <CardDescription className="py-2">January - June 2024</CardDescription>
+                <CardDescription className="py-2">
+                  January - June 2024
+                </CardDescription>
               </CardTitle>
             </div>
             <div className="flex">

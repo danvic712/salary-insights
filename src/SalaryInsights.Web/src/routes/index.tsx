@@ -1,10 +1,18 @@
 import { lazy } from "react";
 
 import Layout from "@/components/layout.tsx";
+import { Navigate } from "react-router-dom";
 
 const Login = lazy(() => import("../pages/login.tsx"));
 const Dashboard = lazy(() => import("../pages/dashboard/dashboard.tsx"));
-const SalaryList = lazy(() => import("../pages/salaries/salary-list.tsx"));
+
+const SalaryOverview = lazy(
+  () => import("../pages/salaries/salary-overview.tsx")
+);
+const SalaryDetails = lazy(
+  () => import("../pages/salaries/salary-details.tsx")
+);
+
 const CompanyList = lazy(() => import("../pages/companies/company-list.tsx"));
 const SettingList = lazy(() => import("../pages/settings/setting-list.tsx"));
 
@@ -18,16 +26,12 @@ const Routes = [
     element: <Layout />,
     children: [
       {
-        path: "",
+        index: true,
         element: <Dashboard />,
       },
       {
         path: "dashboard",
         element: <Dashboard />,
-      },
-      {
-        path: "salaries",
-        element: <SalaryList />,
       },
       {
         path: "companies",
@@ -36,6 +40,23 @@ const Routes = [
       {
         path: "settings",
         element: <SettingList />,
+      },
+      {
+        path: "/salary",
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/salary/overview" replace />,
+          },
+          {
+            path: "overview",
+            element: <SalaryOverview />,
+          },
+          {
+            path: ":month/details",
+            element: <SalaryDetails />,
+          },
+        ],
       },
     ],
   },

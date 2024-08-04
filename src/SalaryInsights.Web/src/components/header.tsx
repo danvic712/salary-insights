@@ -15,9 +15,18 @@ import { ModeToggle } from "./mode-toggle";
 export default function Header() {
   const location = useLocation();
 
-  const isDashboardLink = () => {
-    return location.pathname === "/" || location.pathname === "/dashboard";
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/" || location.pathname === "/dashboard";
+    }
+
+    return location.pathname.startsWith(path);
   };
+
+  const linkClass = (path: string) =>
+    isActive(path)
+      ? "text-foreground transition-colors hover:text-foreground"
+      : "text-muted-foreground transition-colors hover:text-foreground";
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-8">
@@ -30,44 +39,19 @@ export default function Header() {
           <span className="sr-only">Salary Insights</span>
         </NavLink>
 
-        <NavLink
-          to="/dashboard"
-          className={
-            isDashboardLink()
-              ? "text-foreground transition-colors hover:text-foreground"
-              : "text-muted-foreground transition-colors hover:text-foreground"
-          }
-        >
+        <NavLink to="/dashboard" className={linkClass("/dashboard")}>
           Dashboard
         </NavLink>
         <NavLink
-          to="/salaries"
-          className={({ isActive }) =>
-            isActive
-              ? "text-foreground transition-colors hover:text-foreground"
-              : "text-muted-foreground transition-colors hover:text-foreground"
-          }
+          to="/salary/overview"
+          className={linkClass("/salary")}
         >
           Salaries
         </NavLink>
-        <NavLink
-          to="companies"
-          className={({ isActive }) =>
-            isActive
-              ? "text-foreground transition-colors hover:text-foreground"
-              : "text-muted-foreground transition-colors hover:text-foreground"
-          }
-        >
+        <NavLink to="/companies" className={linkClass("/companies")}>
           Companies
         </NavLink>
-        <NavLink
-          to="settings"
-          className={({ isActive }) =>
-            isActive
-              ? "text-foreground transition-colors hover:text-foreground"
-              : "text-muted-foreground transition-colors hover:text-foreground"
-          }
-        >
+        <NavLink to="/settings" className={linkClass("/settings")}>
           Settings
         </NavLink>
       </nav>
@@ -87,44 +71,19 @@ export default function Header() {
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Salary Insights</span>
             </NavLink>
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-foreground transition-colors hover:text-foreground"
-                  : "text-muted-foreground transition-colors hover:text-foreground"
-              }
-            >
+            <NavLink to="/dashboard" className={linkClass("/dashboard")}>
               Dashboard
             </NavLink>
             <NavLink
-              to="/salaries"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-foreground transition-colors hover:text-foreground"
-                  : "text-muted-foreground transition-colors hover:text-foreground"
-              }
+              to="/salary/overview"
+              className={linkClass("/salary")}
             >
               Salaries
             </NavLink>
-            <NavLink
-              to="/companies"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-foreground transition-colors hover:text-foreground"
-                  : "text-muted-foreground transition-colors hover:text-foreground"
-              }
-            >
+            <NavLink to="/companies" className={linkClass("/companies")}>
               Companies
             </NavLink>
-            <NavLink
-              to="/settings"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-foreground transition-colors hover:text-foreground"
-                  : "text-muted-foreground transition-colors hover:text-foreground"
-              }
-            >
+            <NavLink to="/settings" className={linkClass("/settings")}>
               Settings
             </NavLink>
           </nav>

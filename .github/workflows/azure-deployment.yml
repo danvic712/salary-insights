@@ -33,7 +33,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}/danvic712/salary-insights:${{ steps.meta.outputs.tags }}
+        tags: index.docker.io/danvic712/salary-insights:${{ steps.meta.outputs.tags }}
         file: ./Dockerfile
 
   deploy:
@@ -51,4 +51,4 @@ jobs:
         app-name: 'salary-insights'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_90e0986b783b4c63b1bc01b37ccbdcd8 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9203886328f74cd0b5c075f508b9e33a }}/danvic712/salary-insights:${{ steps.meta.outputs.tags }}'
+        images: 'index.docker.io/danvic712/salary-insights:${{ steps.meta.outputs.tags }}'

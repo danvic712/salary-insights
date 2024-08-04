@@ -34,7 +34,7 @@ jobs:
       with:
         push: true
         file: ./Dockerfile
-        platforms: linux/amd64,linux/arm64
+        # platforms: linux/amd64,linux/arm64
         tags: |
             index.docker.io/danvic712/salary-insights:latest
             index.docker.io/danvic712/salary-insights:${{ steps.meta.outputs.tags }}

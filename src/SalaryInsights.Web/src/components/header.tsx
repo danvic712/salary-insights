@@ -39,7 +39,7 @@ export default function Header() {
           <span className="sr-only">Salary Insights</span>
         </NavLink>
 
-        <NavLink to="/dashboard" className={linkClass("/dashboard")}>
+        <NavLink to="/dashboard" className={linkClass("/")}>
           Dashboard
         </NavLink>
         <NavLink
@@ -71,7 +71,7 @@ export default function Header() {
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Salary Insights</span>
             </NavLink>
-            <NavLink to="/dashboard" className={linkClass("/dashboard")}>
+            <NavLink to="/dashboard" className={linkClass("/")}>
               Dashboard
             </NavLink>
             <NavLink

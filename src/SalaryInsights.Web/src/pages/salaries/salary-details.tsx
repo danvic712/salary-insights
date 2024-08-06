@@ -18,19 +18,23 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   PlusCircle,
   MinusCircle,
   Trash2,
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
   Calendar,
   Edit,
   Save,
   FileDown,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  CreditCard,
+  BarChart2,
+  PieChart,
 } from "lucide-react";
-import { format } from "date-fns";
+import { format, subMonths } from "date-fns";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
@@ -233,261 +237,442 @@ const SalaryDetails = () => {
     XLSX.writeFile(workbook, `salary_details_${year}_${month}.xlsx`);
   };
 
+  const getLastMonthSalary = () => {
+    const currentDate = new Date(year, month - 1); // 当前工资的日期
+    const lastMonth = subMonths(currentDate, 1); // 上个月的日期
+
+    // 假设salaries是按日期排序的工资数组
+    return salaries.find(
+      (salary) =>
+        salary.year === lastMonth.getFullYear() &&
+        salary.month === lastMonth.getMonth() + 1
+    );
+  };
+
+  // 新增函数计算统计信息
+  const calculateStats = () => {
+    if (salaries.length === 0) return null;
+
+    const currentSalary = salaries[0];
+    const currentTotal = calculateTotal(currentSalary);
+
+    const lastMonthSalary = getLastMonthSalary();
+    const lastMonthTotal = lastMonthSalary
+      ? calculateTotal(lastMonthSalary)
+      : null;
+
+    const monthlyChange = lastMonthTotal
+      ? (((currentTotal - lastMonthTotal) / lastMonthTotal) * 100).toFixed(2)
+      : null;
+
+    const incomeItems = currentSalary.items.filter(
+      (item) => item.type === "increase"
+    );
+    const expenseItems = currentSalary.items.filter(
+      (item) => item.type === "decrease"
+    );
+
+    const totalIncome = incomeItems.reduce((sum, item) => sum + item.amount, 0);
+    const totalExpense = expenseItems.reduce(
+      (sum, item) => sum + item.amount,
+      0
+    );
+
+    const largestIncomeItem = incomeItems.reduce(
+      (max, item) => (item.amount > max.amount ? item : max),
+      { amount: 0 }
+    );
+    const largestExpenseItem = expenseItems.reduce(
+      (max, item) => (item.amount > max.amount ? item : max),
+      { amount: 0 }
+    );
+
+    // 计算收入和支出的百分比
+    const incomePercentage = (
+      (totalIncome / (totalIncome + totalExpense)) *
+      100
+    ).toFixed(2);
+    const expensePercentage = (
+      (totalExpense / (totalIncome + totalExpense)) *
+      100
+    ).toFixed(2);
+
+    // 按标签分类统计
+    const tagStats = currentSalary.items.reduce((acc, item) => {
+      item.tags.forEach((tag) => {
+        if (!acc[tag]) acc[tag] = 0;
+        acc[tag] += item.amount * (item.type === "increase" ? 1 : -1);
+      });
+      return acc;
+    }, {});
+
+    return {
+      currentTotal,
+      monthlyChange,
+      totalIncome,
+      totalExpense,
+      largestIncomeItem,
+      largestExpenseItem,
+      incomePercentage,
+      expensePercentage,
+      tagStats,
+    };
+  };
+
+  const stats = calculateStats();
+
   return (
     <div className="">
-      <Card className="mb-8 shadow-lg">
-        <CardHeader className="">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div>
-              <CardTitle className="text-3xl font-bold mb-2">
-                {year}年{month}月工资详情
-              </CardTitle>
-              <CardDescription className="text-lg text-gray-200">
-                <Calendar className="inline mr-2" />
-                {format(new Date(year, month - 1), "yyyy年MM月")}
-              </CardDescription>
-            </div>
-            <div className="text-right mt-4 md:mt-0">
-              <p className="text-3xl font-bold">¥{totalIncome.toFixed(2)}</p>
-              <p
-                className={`text-sm ${
-                  calculateGrowth() >= 0 ? "text-green-300" : "text-red-300"
-                }`}
-              >
-                {calculateGrowth() >= 0 ? (
-                  <TrendingUp className="inline mr-1" />
-                ) : (
-                  <TrendingDown className="inline mr-1" />
-                )}
-                较上月{calculateGrowth()}%
-              </p>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="mt-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <Button
-              onClick={() => setIsEditMode(!isEditMode)}
-              className="w-full sm:w-auto"
-            >
-              {isEditMode ? (
-                <Save className="mr-2" />
-              ) : (
-                <Edit className="mr-2" />
-              )}
-              {isEditMode ? "保存" : "编辑"}
-            </Button>
-            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
-              <Button onClick={exportToPDF} className="w-full sm:w-auto">
-                <FileDown className="mr-2" />
-                导出PDF
-              </Button>
-              <Button onClick={exportToExcel} className="w-full sm:w-auto">
-                <FileDown className="mr-2" />
-                导出Excel
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* 右侧：统计数据 */}
+        <div className="w-full lg:w-1/3">
+          <div className="lg:sticky lg:top-20">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold">统计数据</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {stats && (
+                  <>
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="text-center">
+                        <p className="text-sm text-muted-foreground">总收入</p>
+                        <p className="text-xl font-semibold text-green-500">
+                          ¥{stats.totalIncome.toFixed(2)}
+                        </p>
+                        <p className="text-xs">{stats.incomePercentage}%</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm text-muted-foreground">总支出</p>
+                        <p className="text-xl font-semibold text-red-500">
+                          ¥{stats.totalExpense.toFixed(2)}
+                        </p>
+                        <p className="text-xs">{stats.expensePercentage}%</p>
+                      </div>
+                    </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {salaries.map((salary) => (
-          <Card key={salary.id} className="shadow-md">
-            <CardHeader className="bg-gray-100">
-              <CardTitle className="flex justify-between items-center">
-                {isEditMode ? (
-                  <Select
-                    value={salary.company}
-                    onValueChange={(value) =>
-                      updateSalary(salary.id, "company", value)
-                    }
-                  >
-                    <SelectTrigger className="w-full md:w-[180px]">
-                      <SelectValue placeholder="选择公司" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {companies.map((company) => (
-                        <SelectItem key={company} value={company}>
-                          {company}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                ) : (
-                  <span className="text-xl font-semibold">
-                    {salary.company}
-                  </span>
-                )}
-                {isEditMode && (
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => removeSalary(salary.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="mt-4">
-              {salary.items.map((item) => (
-                <div
-                  key={item.id}
-                  className="mb-6 p-4 border rounded-lg shadow-sm"
-                >
-                  <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2 mb-2">
-                    {isEditMode ? (
-                      <>
-                        <Input
-                          placeholder="描述"
-                          value={item.description}
-                          onChange={(e) =>
-                            updateSalaryItem(
-                              salary.id,
-                              item.id,
-                              "description",
-                              e.target.value
-                            )
-                          }
-                          className="w-full md:w-1/3"
-                        />
-                        <Input
-                          type="number"
-                          placeholder="金额"
-                          value={item.amount}
-                          onChange={(e) =>
-                            updateSalaryItem(
-                              salary.id,
-                              item.id,
-                              "amount",
-                              parseFloat(e.target.value)
-                            )
-                          }
-                          className="w-full md:w-1/4"
-                        />
-                        <Select
-                          value={item.type}
-                          onValueChange={(value) =>
-                            updateSalaryItem(salary.id, item.id, "type", value)
-                          }
-                          className="w-full md:w-1/4"
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="类型" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="increase">增加</SelectItem>
-                            <SelectItem value="decrease">减少</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeSalaryItem(salary.id, item.id)}
-                        >
-                          <MinusCircle className="h-4 w-4" />
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <span className="w-full md:w-1/3">
-                          {item.description}
-                        </span>
-                        <span className="w-full md:w-1/4 text-right">
-                          ¥{item.amount.toFixed(2)}
-                        </span>
-                        <span
-                          className={`w-full md:w-1/4 text-center ${
-                            item.type === "increase"
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {item.type === "increase" ? "增加" : "减少"}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                  {isEditMode ? (
-                    <Select
-                      value={item.tags}
-                      onValueChange={(value) =>
-                        updateSalaryItem(salary.id, item.id, "tags", value)
-                      }
-                      multiple
-                      className="mt-2"
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="选择标签" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {tags.map((tag) => (
-                          <SelectItem key={tag} value={tag}>
-                            {tag}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  ) : (
-                    <div className="mt-2">
-                      {item.tags.map((tag) => (
-                        <Badge
+                    <Separator className="my-4" />
+
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm text-muted-foreground">净收入</p>
+                        <p className="text-xl font-semibold">
+                          ¥{(stats.totalIncome - stats.totalExpense).toFixed(2)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">
+                          最大收入项
+                        </p>
+                        <p className="text-lg">
+                          {stats.largestIncomeItem.description}: ¥
+                          {stats.largestIncomeItem.amount.toFixed(2)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">
+                          最大支出项
+                        </p>
+                        <p className="text-lg">
+                          {stats.largestExpenseItem.description}: ¥
+                          {stats.largestExpenseItem.amount.toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <Separator className="my-4" />
+
+                    <div>
+                      <p className="text-lg font-semibold mb-2">标签统计</p>
+                      {Object.entries(stats.tagStats).map(([tag, amount]) => (
+                        <div
                           key={tag}
-                          variant="secondary"
-                          className="mr-1 mb-1"
+                          className="flex justify-between items-center mb-2"
                         >
-                          {tag}
-                        </Badge>
+                          <Badge variant="outline">{tag}</Badge>
+                          <span
+                            className={
+                              amount >= 0 ? "text-green-500" : "text-red-500"
+                            }
+                          >
+                            ¥{Math.abs(amount).toFixed(2)}
+                          </span>
+                        </div>
                       ))}
                     </div>
-                  )}
-                  {isEditMode ? (
-                    <Textarea
-                      placeholder="备注"
-                      value={item.note}
-                      onChange={(e) =>
-                        updateSalaryItem(
-                          salary.id,
-                          item.id,
-                          "note",
-                          e.target.value
-                        )
-                      }
-                      className="mt-2"
-                    />
-                  ) : (
-                    item.note && (
-                      <p className="text-gray-600 mt-2">{item.note}</p>
-                    )
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* 左侧：工资详情 */}
+        <div className="w-full lg:w-2/3">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle className="text-2xl font-bold">工资详情</CardTitle>
+                  <CardDescription className="text-lg"></CardDescription>
+                </div>
+                <div className="text-right">
+                  <p className="text-3xl font-bold">
+                    ¥{stats?.currentTotal.toFixed(2)}
+                  </p>
+                  {stats?.monthlyChange && (
+                    <p
+                      className={`text-sm ${
+                        parseFloat(stats.monthlyChange) >= 0
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {parseFloat(stats.monthlyChange) >= 0 ? (
+                        <TrendingUp className="inline mr-1" />
+                      ) : (
+                        <TrendingDown className="inline mr-1" />
+                      )}
+                      较上月{stats.monthlyChange}%
+                    </p>
                   )}
                 </div>
-              ))}
-              {isEditMode && (
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-4 mb-4">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => addSalaryItem(salary.id)}
-                  className="mt-2 w-full"
+                  onClick={() => setIsEditMode(!isEditMode)}
+                  variant={isEditMode ? "secondary" : "default"}
                 >
-                  <PlusCircle className="h-4 w-4 mr-2" /> 添加项目
+                  {isEditMode ? (
+                    <Save className="mr-2" />
+                  ) : (
+                    <Edit className="mr-2" />
+                  )}
+                  {isEditMode ? "保存" : "编辑"}
+                </Button>
+                <Button onClick={exportToPDF} variant="outline">
+                  <FileDown className="mr-2" />
+                  导出PDF
+                </Button>
+                <Button onClick={exportToExcel} variant="outline">
+                  <FileDown className="mr-2" />
+                  导出Excel
+                </Button>
+              </div>
+
+              {salaries.map((salary) => (
+                <Card key={salary.id} className="mb-4">
+                  <CardHeader>
+                    <CardTitle className="flex justify-between items-center">
+                      {isEditMode ? (
+                        <Select
+                          value={salary.company}
+                          onValueChange={(value) =>
+                            updateSalary(salary.id, "company", value)
+                          }
+                        >
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="选择公司" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {companies.map((company) => (
+                              <SelectItem key={company} value={company}>
+                                {company}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        <span className="text-xl font-semibold">
+                          {salary.company}
+                        </span>
+                      )}
+                      {isEditMode && (
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => removeSalary(salary.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {salary.items.map((item) => (
+                        <div key={item.id} className="p-4 border rounded-lg">
+                          <div className="flex flex-wrap gap-2 items-center mb-2">
+                            {isEditMode ? (
+                              <>
+                                <Input
+                                  placeholder="描述"
+                                  value={item.description}
+                                  onChange={(e) =>
+                                    updateSalaryItem(
+                                      salary.id,
+                                      item.id,
+                                      "description",
+                                      e.target.value
+                                    )
+                                  }
+                                  className="flex-grow"
+                                />
+                                <Input
+                                  type="number"
+                                  placeholder="金额"
+                                  value={item.amount}
+                                  onChange={(e) =>
+                                    updateSalaryItem(
+                                      salary.id,
+                                      item.id,
+                                      "amount",
+                                      parseFloat(e.target.value)
+                                    )
+                                  }
+                                  className="w-24"
+                                />
+                                <Select
+                                  value={item.type}
+                                  onValueChange={(value) =>
+                                    updateSalaryItem(
+                                      salary.id,
+                                      item.id,
+                                      "type",
+                                      value
+                                    )
+                                  }
+                                >
+                                  <SelectTrigger className="w-24">
+                                    <SelectValue placeholder="类型" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="increase">
+                                      增加
+                                    </SelectItem>
+                                    <SelectItem value="decrease">
+                                      减少
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() =>
+                                    removeSalaryItem(salary.id, item.id)
+                                  }
+                                >
+                                  <MinusCircle className="h-4 w-4" />
+                                </Button>
+                              </>
+                            ) : (
+                              <>
+                                <span className="flex-grow">
+                                  {item.description}
+                                </span>
+                                <span className="font-medium">
+                                  ¥{item.amount.toFixed(2)}
+                                </span>
+                                <Badge
+                                  variant={
+                                    item.type === "increase"
+                                      ? "success"
+                                      : "destructive"
+                                  }
+                                >
+                                  {item.type === "increase" ? "增加" : "减少"}
+                                </Badge>
+                              </>
+                            )}
+                          </div>
+                          {isEditMode ? (
+                            <Select
+                              value={item.tags}
+                              onValueChange={(value) =>
+                                updateSalaryItem(
+                                  salary.id,
+                                  item.id,
+                                  "tags",
+                                  value
+                                )
+                              }
+                              multiple
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="选择标签" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {tags.map((tag) => (
+                                  <SelectItem key={tag} value={tag}>
+                                    {tag}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {item.tags.map((tag) => (
+                                <Badge key={tag} variant="outline">
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
+                          {isEditMode ? (
+                            <Textarea
+                              placeholder="备注"
+                              value={item.note}
+                              onChange={(e) =>
+                                updateSalaryItem(
+                                  salary.id,
+                                  item.id,
+                                  "note",
+                                  e.target.value
+                                )
+                              }
+                              className="mt-2"
+                            />
+                          ) : (
+                            item.note && (
+                              <p className="text-sm text-muted-foreground mt-2">
+                                {item.note}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      ))}
+                      {isEditMode && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => addSalaryItem(salary.id)}
+                          className="w-full"
+                        >
+                          <PlusCircle className="h-4 w-4 mr-2" /> 添加项目
+                        </Button>
+                      )}
+                    </div>
+                    <Separator className="my-4" />
+                    <div className="text-right">
+                      <strong className="text-2xl">
+                        总计: ¥{calculateTotal(salary).toFixed(2)}
+                      </strong>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+
+              {isEditMode && (
+                <Button onClick={addSalary} className="w-full">
+                  <PlusCircle className="h-4 w-4 mr-2" /> 添加新工资条目
                 </Button>
               )}
-              <div className="mt-6 text-right">
-                <strong className="text-2xl">
-                  总计: ¥{calculateTotal(salary).toFixed(2)}
-                </strong>
-              </div>
             </CardContent>
           </Card>
-        ))}
+        </div>
       </div>
-
-      {isEditMode && (
-        <Button onClick={addSalary} className="mt-8 w-full">
-          <PlusCircle className="h-4 w-4 mr-2" /> 添加新工资条目
-        </Button>
-      )}
     </div>
   );
 };

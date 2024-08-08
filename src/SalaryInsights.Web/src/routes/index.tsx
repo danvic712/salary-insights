@@ -1,7 +1,8 @@
 import { lazy } from "react";
+import { Navigate } from "react-router-dom";
 
 import Layout from "@/components/layout.tsx";
-import { Navigate } from "react-router-dom";
+import ErrorHandler from "@/components/error-handler.tsx";
 
 const Login = lazy(() => import("../pages/login.tsx"));
 const Dashboard = lazy(() => import("../pages/dashboard/dashboard.tsx"));
@@ -20,6 +21,7 @@ const Routes = [
   {
     path: "/login",
     element: <Login />,
+    errorElement: <ErrorHandler />,
   },
   {
     path: "/",
@@ -59,6 +61,7 @@ const Routes = [
         ],
       },
     ],
+    errorElement: <ErrorHandler />,
   },
 ];
 

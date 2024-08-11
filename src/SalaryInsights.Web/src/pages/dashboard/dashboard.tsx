@@ -1,15 +1,7 @@
 import React from "react";
 
-import {
-  Activity,
-  CalendarIcon,
-  CreditCard,
-  DollarSign,
-  Users,
-} from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+
 import {
   Card,
   CardContent,
@@ -18,24 +10,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-
-import { cn } from "@/lib/utils";
-
-import { format, startOfYear } from "date-fns";
-import { DateRange } from "react-day-picker";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
+
+import YearlyRevenue from "./yearly-revenue";
+import TopMonthlyRevenue from "./top-monthly-revenue";
+import MetricCard from "./metric-card";
 
 export default function Dashboard() {
   const chartData = [
@@ -78,60 +65,54 @@ export default function Dashboard() {
     []
   );
 
+  const revenueData = [
+    { year: "2018", revenue: 50000 },
+    { year: "2019", revenue: 65000 },
+    { year: "2020", revenue: 75000 },
+    { year: "2021", revenue: 90000 },
+    { year: "2022", revenue: 110000 },
+    { year: "2023", revenue: 120000 },
+    { year: "2024", revenue: 200000 },
+  ];
+
+  const topMonthlyRevenueData = [
+    { month: "2024-02", revenue: 186 },
+    { month: "2023-12", revenue: 305 },
+    { month: "2024-06", revenue: 237 },
+    { month: "2022-03", revenue: 731 },
+    { month: "2021-08", revenue: 209 },
+  ];
+
   return (
     <>
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Dashboard</h1>
       </div>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-        <Card x-chunk="dashboard-01-chunk-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-xs text-muted-foreground">
-              +20.1% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card x-chunk="dashboard-01-chunk-1">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-muted-foreground">
-              +180.1% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card x-chunk="dashboard-01-chunk-2">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sales</CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-muted-foreground">
-              +19% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card x-chunk="dashboard-01-chunk-3">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+573</div>
-            <p className="text-xs text-muted-foreground">
-              +201 since last hour
-            </p>
-          </CardContent>
-        </Card>
+        <MetricCard
+          title="Total Revenue"
+          icon={DollarSign}
+          value="$45,231.89"
+          description="+20.1% from last month"
+        />
+        <MetricCard
+          title="Subscriptions"
+          icon={Users}
+          value="2,350"
+          description="+180.1% from last month"
+        />
+        <MetricCard
+          title="Sales"
+          icon={CreditCard}
+          value="+12,234"
+          description="+19% from last month"
+        />
+        <MetricCard
+          title="Active Now"
+          icon={Activity}
+          value="573"
+          description="+201 since last hour"
+        />
       </div>
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
@@ -290,6 +271,10 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-2">
+        <YearlyRevenue data={revenueData} />
+        <TopMonthlyRevenue data={topMonthlyRevenueData} />
       </div>
     </>
   );

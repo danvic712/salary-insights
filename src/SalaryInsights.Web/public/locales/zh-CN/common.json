@@ -1,0 +1,10 @@
+{
+  "myAccount": "我的账户",
+  "settings": "系统设置",
+  "language": "显示语言",
+  "logout": "退出登录",
+  "languages": {
+    "english": "English",
+    "chinese": "中文"
+  }
+}

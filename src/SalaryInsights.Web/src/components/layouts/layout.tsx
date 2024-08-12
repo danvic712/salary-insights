@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Header from "./header";
-import ScrollToTop from "./scroll-to-top";
+import ScrollToTop from "../scroll-to-top";
 
 interface LayoutProps {
   outlet?: React.ReactNode;

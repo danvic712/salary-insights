@@ -1,0 +1,10 @@
+{
+  "myAccount": "My Account",
+  "settings": "Settings",
+  "language": "Language",
+  "logout": "Logout",
+  "languages": {
+    "english": "English",
+    "chinese": "中文"
+  }
+}

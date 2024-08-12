@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 
-import Layout from "@/components/layout.tsx";
+import Layout from "@/components/layouts/layout.tsx";
 import ErrorHandler from "@/components/error-handler.tsx";
 
 const Login = lazy(() => import("../pages/login.tsx"));

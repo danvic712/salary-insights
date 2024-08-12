@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Loading from "./components/loading";
 
 import Routes from "./routes";
+import "./i18n";
 
 const router = createBrowserRouter(Routes);
 

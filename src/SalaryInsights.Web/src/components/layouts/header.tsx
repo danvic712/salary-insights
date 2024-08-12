@@ -1,18 +1,36 @@
+import { useEffect } from "react";
 import { CircleUser, Menu, Package2 } from "lucide-react";
-import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { NavLink, useLocation } from "react-router-dom";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../mode-toggle";
+import { useTranslation } from "react-i18next";
+import { loadNamespaces } from "@/lib/i18nLoader";
 
 export default function Header() {
+  const { t, i18n } = useTranslation("common");
+
+  useEffect(() => {
+    loadNamespaces("common");
+  }, []);
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   const location = useLocation();
 
   const isActive = (path: string) => {
@@ -42,17 +60,11 @@ export default function Header() {
         <NavLink to="/dashboard" className={linkClass("/")}>
           Dashboard
         </NavLink>
-        <NavLink
-          to="/salary/overview"
-          className={linkClass("/salary")}
-        >
+        <NavLink to="/salary/overview" className={linkClass("/salary")}>
           Salaries
         </NavLink>
         <NavLink to="/companies" className={linkClass("/companies")}>
           Companies
-        </NavLink>
-        <NavLink to="/settings" className={linkClass("/settings")}>
-          Settings
         </NavLink>
       </nav>
       <Sheet>
@@ -74,17 +86,11 @@ export default function Header() {
             <NavLink to="/dashboard" className={linkClass("/")}>
               Dashboard
             </NavLink>
-            <NavLink
-              to="/salary/overview"
-              className={linkClass("/salary")}
-            >
+            <NavLink to="/salary/overview" className={linkClass("/salary")}>
               Salaries
             </NavLink>
             <NavLink to="/companies" className={linkClass("/companies")}>
               Companies
-            </NavLink>
-            <NavLink to="/settings" className={linkClass("/settings")}>
-              Settings
             </NavLink>
           </nav>
         </SheetContent>
@@ -99,12 +105,27 @@ export default function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem>{t("settings")}</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>{t("language")}</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuRadioGroup
+                  value={i18n.language}
+                  onValueChange={changeLanguage}
+                >
+                  <DropdownMenuRadioItem value="en-US">
+                    {t("languages.english")}
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="zh-CN">
+                    {t("languages.chinese")}
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>{t("logout")}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

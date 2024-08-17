@@ -14,7 +14,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import SalaryCard from "./salary-card";
 
-export default function SalaryOverview() {
+export default function Salary() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
   const [date, setDate] = React.useState<DateRange | undefined>({

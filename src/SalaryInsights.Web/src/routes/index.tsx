@@ -7,14 +7,14 @@ import ErrorHandler from "@/components/error-handler.tsx";
 const Login = lazy(() => import("../pages/login.tsx"));
 const Dashboard = lazy(() => import("../pages/dashboard/dashboard.tsx"));
 
-const SalaryOverview = lazy(
-  () => import("../pages/salaries/salary-overview.tsx")
-);
-const SalaryDetails = lazy(
-  () => import("../pages/salaries/salary-details.tsx")
+const Salary = lazy(() => import("../pages/salary/salary.tsx"));
+const SalaryDetails = lazy(() => import("../pages/salary/salary-details.tsx"));
+
+const Employment = lazy(() => import("../pages/employment/employment.tsx"));
+const EmploymentDetails = lazy(
+  () => import("../pages/employment/employment-details.tsx")
 );
 
-const CompanyList = lazy(() => import("../pages/companies/company-list.tsx"));
 const SettingList = lazy(() => import("../pages/settings/setting-list.tsx"));
 
 const Routes = [
@@ -36,8 +36,17 @@ const Routes = [
         element: <Dashboard />,
       },
       {
-        path: "companies",
-        element: <CompanyList />,
+        path: "employment",
+        children: [
+          {
+            path: "",
+            element: <Employment />,
+          },
+          {
+            path: "company/:companyId",
+            element: <EmploymentDetails />,
+          },
+        ],
       },
       {
         path: "settings",
@@ -47,12 +56,8 @@ const Routes = [
         path: "/salary",
         children: [
           {
-            index: true,
-            element: <Navigate to="/salary/overview" replace />,
-          },
-          {
-            path: "overview",
-            element: <SalaryOverview />,
+            path: "",
+            element: <Salary />,
           },
           {
             path: ":month/details",

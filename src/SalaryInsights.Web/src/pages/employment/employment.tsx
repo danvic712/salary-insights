@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import CareerSummary from "./career-summary";
 import EmploymentList from "./employment-list";
+import EmploymentDetails from "./employment-details";
 
 const Employment = () => {
   const [companies, setCompanies] = useState([]);
@@ -88,81 +80,35 @@ const Employment = () => {
     setIsDialogOpen(true);
   };
 
-  const handleSave = () => {
-    setCompanies(
-      companies.map((c) => (c.id === editingCompany.id ? editingCompany : c))
-    );
-    setIsDialogOpen(false);
-    setEditingCompany(null);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [companyId, setCompanyId] = useState(null);
+
+  const handleOpenSheet = (id) => {
+    setCompanyId(id);
+    setIsSheetOpen(true);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditingCompany({ ...editingCompany, [name]: value });
+  const handleSave = (updatedCompany) => {
+    console.log("Updated company data:", updatedCompany);
+    // 在实际应用中，这里会发送数据到服务器
+    setIsSheetOpen(false);
   };
 
   return (
-    <div>
-      <CareerSummary summary={summary} />
+    <>
+      <CareerSummary summary={summary} onOpenSheet={handleOpenSheet} />
 
       <EmploymentList />
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>
-              {editingCompany?.id ? "编辑公司信息" : "添加新公司"}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="mt-4 space-y-4">
-            <div>
-              <Label htmlFor="name">公司名称</Label>
-              <Input
-                id="name"
-                name="name"
-                value={editingCompany?.name || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <Label htmlFor="position">职位</Label>
-              <Input
-                id="position"
-                name="position"
-                value={editingCompany?.position || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <Label htmlFor="startDate">入职时间</Label>
-              <Input
-                id="startDate"
-                name="startDate"
-                type="date"
-                value={editingCompany?.startDate || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <Label htmlFor="endDate">离职时间</Label>
-              <Input
-                id="endDate"
-                name="endDate"
-                type="date"
-                value={editingCompany?.endDate || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className="mt-6 flex justify-end space-x-3">
-            <Button onClick={() => setIsDialogOpen(false)} variant="outline">
-              取消
-            </Button>
-            <Button onClick={handleSave}>保存</Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+      {companyId && (
+        <EmploymentDetails
+          companyId={companyId}
+          isOpen={isSheetOpen}
+          onSave={handleSave}
+          onClose={() => setIsSheetOpen(false)}
+        />
+      )}
+    </>
   );
 };
 

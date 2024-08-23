@@ -11,9 +11,6 @@ const Salary = lazy(() => import("../pages/salary/salary.tsx"));
 const SalaryDetails = lazy(() => import("../pages/salary/salary-details.tsx"));
 
 const Employment = lazy(() => import("../pages/employment/employment.tsx"));
-const EmploymentDetails = lazy(
-  () => import("../pages/employment/employment-details.tsx")
-);
 
 const SettingList = lazy(() => import("../pages/settings/setting-list.tsx"));
 
@@ -41,10 +38,6 @@ const Routes = [
           {
             path: "",
             element: <Employment />,
-          },
-          {
-            path: "company/:companyId",
-            element: <EmploymentDetails />,
           },
         ],
       },

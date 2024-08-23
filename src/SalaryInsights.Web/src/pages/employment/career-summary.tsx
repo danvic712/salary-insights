@@ -7,8 +7,8 @@ import {
   BarChartIcon,
 } from "lucide-react";
 
-const CareerSummary = ({ summary }) => (
-  <Card className="mb-6">
+const CareerSummary = ({ summary, onOpenSheet }) => (
+  <Card>
     <CardHeader>
       <CardTitle>Career Summary</CardTitle>
     </CardHeader>
@@ -17,6 +17,7 @@ const CareerSummary = ({ summary }) => (
         title="Current Company"
         value={summary.currentCompany || "N/A"}
         icon={<BriefcaseIcon className="w-5 h-5 text-primary" />}
+        onClick={() => onOpenSheet(1)}
       />
       <SummaryPanel
         title="Start Date"
@@ -47,12 +48,31 @@ const CareerSummary = ({ summary }) => (
   </Card>
 );
 
-const SummaryPanel = ({ title, value, icon }) => (
+interface SummaryPanelProps {
+  title: string;
+  value: string | number;
+  icon: React.ReactNode;
+  onClick?: () => void;
+}
+
+const SummaryPanel: React.FC<SummaryPanelProps> = ({
+  title,
+  value,
+  icon,
+  onClick = undefined,
+}) => (
   <div className="flex items-center">
     <div className="flex-shrink-0 mr-3 text-primary">{icon}</div>
     <div>
       <p className="text-sm font-medium text-gray-600">{title}</p>
-      <p className="text-base font-semibold text-gray-900">{value}</p>
+      <p
+        className={`text-base font-semibold text-gray-900 ${
+          onClick ? "cursor-pointer hover:text-primary" : ""
+        }`}
+        onClick={onClick}
+      >
+        {value}
+      </p>
     </div>
   </div>
 );

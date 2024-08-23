@@ -56,7 +56,7 @@ const SearchForm = () => {
   const [endDate, setEndDate] = React.useState<Date>();
 
   return (
-    <div className="mb-4 flex flex-col space-y-4">
+    <div className="mb-6 flex flex-col space-y-4">
       <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
         <div className="flex-1">
           <Input

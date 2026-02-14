@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/host/">
+    <Project Path="host/SalaryInsights.Host/SalaryInsights.Host.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/SalaryInsights.API/SalaryInsights.API.csproj" />
+    <Project Path="src/SalaryInsights.Application/SalaryInsights.Application.csproj" />
+    <Project Path="src/SalaryInsights.Domain/SalaryInsights.Domain.csproj" />
+    <Project Path="src\SalaryInsights.Infrastructure\SalaryInsights.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SalaryInsights.Tests/SalaryInsights.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,11 +1,13 @@
 using System.Reflection;
 using System.Security.Claims;
-using System.Text;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SalaryInsights.API.Extensions;
 using SalaryInsights.Application;
 using SalaryInsights.Application.Behaviors;
 using SalaryInsights.Application.Contracts;
@@ -55,8 +57,6 @@ try
 
     builder.Services.AddDbContextPool<SalaryInsightsDbContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("SalaryInsights")));
-
-    var signingKey = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]!);
 
     // Configure JWT Bearer authentication.
     // This setup validates access tokens issued by Supabase (GoTrue) using OIDC discovery + JWKS.
@@ -136,6 +136,21 @@ try
     // Add services to the container.
     builder.Services.AddControllers();
 
+    builder.Services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ReportApiVersions = true;
+            options.ApiVersionReader = new UrlSegmentApiVersionReader();
+        })
+        .AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
+        });
+
+    builder.Services.Configure<RouteOptions>(options => { options.LowercaseUrls = true; });
+
     // Problem details and exception handler
     //
     builder.Services.AddProblemDetails();
@@ -143,6 +158,10 @@ try
 
     // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
     builder.Services.AddOpenApi();
+
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
     var app = builder.Build();
 
@@ -152,6 +171,16 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.MapOpenApi();
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+            var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+            foreach (var description in provider.ApiVersionDescriptions)
+            {
+                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                    description.GroupName.ToUpperInvariant());
+            }
+        });
     }
 
     app.UseHttpsRedirection();

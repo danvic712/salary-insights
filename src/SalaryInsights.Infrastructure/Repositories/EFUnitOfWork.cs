@@ -19,7 +19,7 @@ public class EFUnitOfWork(SalaryInsightsDbContext dbContext)
 {
     private readonly ConcurrentDictionary<Type, Lazy<object>> _repositories = new();
     
-    public IRepository<TEntity> GetRepository<TEntity>() 
+    public IRepository<TEntity> Get<TEntity>() 
         where TEntity : class
     {
         var type = typeof(TEntity);

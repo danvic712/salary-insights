@@ -13,6 +13,8 @@ using SalaryInsights.Application.Behaviors;
 using SalaryInsights.Application.Contracts;
 using SalaryInsights.Domain.Contracts;
 using SalaryInsights.Infrastructure;
+using SalaryInsights.Infrastructure.Contracts;
+using SalaryInsights.Infrastructure.EntityFrameworkCore.DataSeeders;
 using SalaryInsights.Infrastructure.Exceptions;
 using SalaryInsights.Infrastructure.Repositories;
 using Serilog;
@@ -47,6 +49,21 @@ try
 
     var assembly = typeof(Bootstrap).GetTypeInfo().Assembly;
 
+    builder.Services.AddDataProtection();
+    builder.Services.AddSingleton<IDataProtectorAppService, DataProtectorAppService>();
+
+    // DataSeeder
+    builder.Services.AddScoped<IDatabaseMigrator, DatabaseMigrator>();
+
+    var seederType = typeof(IDataSeeder);
+    var seeders = seederType.Assembly.GetTypes()
+        .Where(t => seederType.IsAssignableFrom(t) && t is { IsClass: true, IsAbstract: false });
+
+    foreach (var type in seeders)
+    {
+        builder.Services.AddScoped(seederType, type);
+    }
+
     // MediatR
     //
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
@@ -55,8 +72,12 @@ try
     // FluentValidation
     builder.Services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
-    builder.Services.AddDbContextPool<SalaryInsightsDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("SalaryInsights")));
+    builder.Services.AddDbContext<SalaryInsightsDbContext>(options =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("SalaryInsights");
+        options.UseNpgsql(connectionString,
+            x => x.MigrationsHistoryTable("ef_migrations_history"));
+    });
 
     // Configure JWT Bearer authentication.
     // This setup validates access tokens issued by Supabase (GoTrue) using OIDC discovery + JWKS.
@@ -188,6 +209,13 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+
+    // Run database migrations and seeders before app runs
+    using (var scope = app.Services.CreateScope())
+    {
+        var migrator = scope.ServiceProvider.GetRequiredService<IDatabaseMigrator>();
+        await migrator.MigrateAsync();
+    }
 
     await app.RunAsync();
 }

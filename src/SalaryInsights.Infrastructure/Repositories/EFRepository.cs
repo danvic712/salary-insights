@@ -8,6 +8,7 @@
 // Description:
 // -----------------------------------------------------------------------
 
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SalaryInsights.Domain.Contracts;
 
@@ -16,9 +17,27 @@ namespace SalaryInsights.Infrastructure.Repositories;
 public class EFRepository<TEntity>(DbContext dbContext) : IRepository<TEntity>
     where TEntity : class
 {
-    public Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public IQueryable<TEntity> GetQueryable(bool asNoTracking = false,
+        params Expression<Func<TEntity, object>>[] includes)
     {
-        dbContext.Set<TEntity>().Add(entity);
-        return Task.CompletedTask;
+        IQueryable<TEntity> query = dbContext.Set<TEntity>();
+
+        if (asNoTracking)
+        {
+            query = query.AsNoTracking();
+        }
+
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return query;
+    }
+
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+    {
+        await dbContext.Set<TEntity>()
+            .AddAsync(entity, cancellationToken);
     }
 }

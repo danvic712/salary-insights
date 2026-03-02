@@ -10,6 +10,7 @@
 
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using SalaryInsights.Application.Contracts;
 using SalaryInsights.Domain.Contracts;
 using SalaryInsights.Domain.Models;
@@ -20,14 +21,15 @@ public class SalaryInsightsDbContext(
     DbContextOptions<SalaryInsightsDbContext> options,
     ITenantContext tenantContext) : DbContext(options)
 {
-    public DbSet<Salary> Salaries => Set<Salary>();
-    public DbSet<SalaryItem> SalaryItems => Set<SalaryItem>();
-    public DbSet<Company> Companies => Set<Company>();
+    public DbSet<AuthProvider> AuthProviders => Set<AuthProvider>();
+    public DbSet<AuthProviderSetting> AuthProviderSettings => Set<AuthProviderSetting>();
+
+    // public DbSet<Salary> Salaries => Set<Salary>();
+    // public DbSet<SalaryItem> SalaryItems => Set<SalaryItem>();
+    // public DbSet<Company> Companies => Set<Company>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("salary");
-
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SalaryInsightsDbContext).Assembly);
 
         base.OnModelCreating(modelBuilder);

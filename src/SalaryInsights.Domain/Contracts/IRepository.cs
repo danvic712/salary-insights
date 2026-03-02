@@ -8,10 +8,14 @@
 // Description:
 // -----------------------------------------------------------------------
 
+using System.Linq.Expressions;
+
 namespace SalaryInsights.Domain.Contracts;
 
-public interface IRepository<in TEntity>
+public interface IRepository<TEntity>
     where TEntity : class
 {
+    IQueryable<TEntity> GetQueryable(bool asNoTracking = false, params Expression<Func<TEntity, object>>[] includes);
+
     Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 }

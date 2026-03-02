@@ -39,7 +39,7 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IO
 
             if (File.Exists(xmlPath))
             {
-                options.IncludeXmlComments(xmlPath);
+                options.IncludeXmlComments(xmlPath, true);
             }
         }
 
@@ -67,7 +67,13 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IO
         var info = new OpenApiInfo()
         {
             Title = $"SalaryInsights API {description.GroupName}",
-            Version = description.ApiVersion.ToString()
+            Description = "An ASP.NET Core WebAPI for Salary Insights",
+            Version = description.ApiVersion.ToString(),
+            Contact = new OpenApiContact
+            {
+                Name = "Danvic Wang",
+                Url = new Uri("https://github.com/danvic712")
+            }
         };
 
         if (description.ApiVersion == options.Value.DefaultApiVersion)

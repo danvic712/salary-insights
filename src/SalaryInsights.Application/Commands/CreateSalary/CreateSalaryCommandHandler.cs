@@ -34,7 +34,7 @@ public class CreateSalaryCommandHandler(ILogger<CreateSalaryCommandHandler> logg
                 salary.AddItem(item.Name, item.Type, item.Amount);
             }
 
-            await unitOfWork.GetRepository<Salary>()
+            await unitOfWork.Get<Salary>()
                 .AddAsync(salary, cancellationToken);
 
             await unitOfWork.CommitAsync(cancellationToken);

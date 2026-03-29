@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SalaryInsights.Domain/SalaryInsights.Domain.csproj" />
+    <Project Path="src/SalaryInsights.Infrastructure/SalaryInsights.Infrastructure.csproj" />
+    <Project Path="src/SalaryInsights/SalaryInsights.csproj" />
+    <Project Path="src\SalaryInsights.Application\SalaryInsights.Application.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>

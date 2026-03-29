@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
+        <PackageReference Include="Microsoft.Agents.AI" Version="1.0.0-rc4" />
+        <PackageReference Include="Microsoft.Agents.AI.DevUI" Version="1.0.0-preview.260311.1" />
+        <PackageReference Include="Microsoft.Agents.AI.Hosting" Version="1.0.0-preview.260311.1" />
+        <PackageReference Include="Microsoft.Agents.AI.Hosting.A2A.AspNetCore" Version="1.0.0-preview.260311.1" />
+        <PackageReference Include="Microsoft.Agents.AI.Hosting.AGUI.AspNetCore" Version="1.0.0-preview.260311.1" />
+        <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc4" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+        <PackageReference Include="MsgReader" Version="6.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\skills\**\*.*">
+            <Link>skills\%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SalaryInsights.Domain\SalaryInsights.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

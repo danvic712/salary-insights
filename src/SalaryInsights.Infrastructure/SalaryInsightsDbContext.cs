@@ -23,6 +23,10 @@ public class SalaryInsightsDbContext(
 {
     public DbSet<FileAsset> FileAssets => Set<FileAsset>();
 
+    public DbSet<AIProvider> AIProviders => Set<AIProvider>();
+
+    public DbSet<AIModel> AIModels => Set<AIModel>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SalaryInsightsDbContext).Assembly);

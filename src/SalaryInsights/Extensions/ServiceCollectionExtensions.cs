@@ -1,15 +1,10 @@
-using System;
 using System.ClientModel;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Asp.Versioning;
 using Azure.AI.OpenAI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SalaryInsights.Application;
 using SalaryInsights.Application.Contracts;
@@ -35,7 +30,7 @@ public static class ServiceCollectionExtensions
         {
             var connectionString = configuration.GetConnectionString("SalaryInsights");
             options.UseNpgsql(connectionString,
-                x => x.MigrationsHistoryTable("ef_migrations_history"));
+                x => x.MigrationsHistoryTable("ef_migrations_history", "public"));
         });
 
         return services;
